@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("//cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 @tailwind base;
 @tailwind components;
@@ -6,4 +6,24 @@
 
 html {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+.right-wrap {
+    flex-basis: calc(100% - 160px);
+}
+
+.common-title {
+    position: relative;
+}
+
+.common-title::after {
+    content: '';
+    display: block;
+    width: 1px;
+    position: absolute;
+    top: 6px;
+    right: 0;
+    bottom: 6px;
+    background-color: rgba(255, 255, 255, .5);
+    margin: auto 0;
 }
