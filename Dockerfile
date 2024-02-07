@@ -9,6 +9,7 @@ RUN mv composer.phar /usr/bin/composer
 
 RUN apt-get install -y zlib1g-dev && apt-get install -y libzip-dev
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN composer global require laravel/installer
 RUN ["/bin/bash", "-c", "echo PATH=$PATH:~/.composer/vendor/bin/ >> ~/.bashrc"]
