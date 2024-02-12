@@ -1,8 +1,8 @@
-<div class="left-wrap basis-[160px] py-5 border-r border-y-gray-200 min-h-[600px]">
+<div class="left-wrap basis-[160px] py-5">
     <nav>
-        <h2 class="sr-only">메뉴</h2>
+        <h3 class="sr-only">메뉴</h3>
         <div class="flex flex-col">
-            <h3 class="font-bold mb-1">기본정보관리</h3>
+            <h4 class="font-bold mb-1">기본정보관리</h4>
             <ul class="text-[0.825em]">
                 <li><a href="">블로그 정보</a></li>
                 <li><a href="">기본 서체 정보</a></li>
