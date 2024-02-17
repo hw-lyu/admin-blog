@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('blog_information', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->nullable()->comment('블로그명');
-            $table->string('nick_name', 10)->nullable()->comment('별명');
+            $table->string('name', 50)->comment('블로그명');
+            $table->string('nick_name', 10)->comment('별명');
             $table->string('introduce', 200)->comment('자기소개');
-            $table->string('profile_path', 255)->comment('프로필 이미지 경로');
-            $table->string('cover_img_path', 255)->comment('커버 이미지 경로');
+            $table->string('profile_img_path', 255)->nullable()->comment('프로필 이미지 경로');
+            $table->string('cover_img_path', 255)->nullable()->comment('커버 이미지 경로');
             $table->timestamps();
             $table->softDeletes();
         });

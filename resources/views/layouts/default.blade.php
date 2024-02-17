@@ -7,6 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-w-[1180px]">
+@include('common.toast-popup')
 @include('common.header')
 <section class="main-container">
     <h2 class="sr-only">본문</h2>

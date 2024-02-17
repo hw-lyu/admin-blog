@@ -7,17 +7,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-w-[1180px]">
-
-@if ($errors->any())
-    <div class="absolute top-2 left-2 bg-purple-600 rounded px-5 py-2 text-white">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <form action="{{route('login.authenticate')}}" method="post" class="h-full">
     @csrf
     <div class="login-box">
