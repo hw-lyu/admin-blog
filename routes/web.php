@@ -22,14 +22,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/information', BlogInformationController::class);
 });
 
-//Route::post('/test', function (\Illuminate\Http\Request $request) {
-//    $file = $request->file('cover_img');
-//
-//    $path = Storage::disk('s3')->put($file->getClientOriginalName(), file_get_contents($file));
-//
-//    dump($path);
-//});
-
 // 로그인
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
