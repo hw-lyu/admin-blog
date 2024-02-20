@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\BlogInformationController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\BlogInformationController;
+use App\Http\Controllers\BlogMenuController;
 use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [BlogInformationController::class, 'index']);
 
     Route::resource('/information', BlogInformationController::class);
+    Route::resource('/menu', BlogMenuController::class);
 });
 
 // 로그인

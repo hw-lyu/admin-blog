@@ -59,3 +59,7 @@ th {
 .login-box {
     @apply bg-gray-100 min-h-full h-auto flex items-center justify-center;
 }
+
+.line {
+    @apply border-t-2;
+}
