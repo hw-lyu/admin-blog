@@ -35,7 +35,7 @@
             <tr>
                 <th><label for="blogCoverImg">불로그 커버 이미지</label></th>
                 <td>
-                    <div class="flex flex-col mb-1">
+                    <div class="flex flex-col mt-2 mb-1">
                         <label class="flex flex-col">현재 파일명 : <input type="text" class="p-1" name="now_cover_img" value="{{ $data['cover_img_path'] }}" readonly></label>
                         <img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/{{ $data['cover_img_path'] }}" alt="" width="150">
                     </div>

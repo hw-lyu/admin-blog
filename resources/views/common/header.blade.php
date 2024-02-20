@@ -18,8 +18,8 @@
         <nav class="flex items-center">
             <h2 class="sr-only">메인 메뉴</h2>
             <ul class="flex items-center text-[0.825em]">
-                <li class="pr-7"><a href="">기본 설정</a></li>
-                <li class="pr-7"><a href="">메뉴 관리</a></li>
+                <li class="pr-7"><a href="{{ route('information.index') }}">기본 설정</a></li>
+                <li class="pr-7"><a href="{{ route('menu.index') }}">메뉴 관리</a></li>
                 <li class="pr-7"><a href="">블로그 통계</a></li>
             </ul>
         </nav>
