@@ -148,7 +148,14 @@
                     }
                 });
             } else {
-                document.querySelector('.list li:last-of-type').after(item);
+                let lastItem = document.querySelector('.list li:last-of-type');
+
+                if(lastItem === null) {
+                    list.appendChild(item);
+                } else {
+                    document.querySelector('.list li:last-of-type').after(item);
+                }
+
                 item.appendChild(btn);
             }
 
