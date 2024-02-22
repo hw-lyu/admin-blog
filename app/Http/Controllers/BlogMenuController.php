@@ -6,6 +6,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
+use Illuminate\Http\Request;
 
 class BlogMenuController extends Controller
 {
@@ -20,7 +21,7 @@ class BlogMenuController extends Controller
         return view('menu');
     }
 
-    public function stroe() {
-
+    public function store(Request $request) {
+        dd($request->all());
     }
 }

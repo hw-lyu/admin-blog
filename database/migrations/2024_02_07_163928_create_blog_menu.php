@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('blog_menu', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->nullable()->comment('메뉴 영문명');
-            $table->string('name_ko', 255)->nullable()->comment('메뉴 한글명');
+            $table->string('name', 255)->nullable()->comment('메뉴 한글명');
+            $table->string('name_eng', 255)->nullable()->comment('메뉴 영문명');
             $table->enum('is_blind', [0,1])->default(1)->comment('글 공개여부 0:비공개 1:공개');
             $table->unsignedInteger('parent_id')->nullable()->comment('부모 아이디 (첫뎁스일시 본인 아이디');
             $table->unsignedInteger('sort')->default(1)->comment('카테고리 순서');
