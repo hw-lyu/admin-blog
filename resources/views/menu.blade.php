@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('right-content')
-    <form action="{{ route('information.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('menu.store') }}" method="post" name="menu_form">
         @csrf
         <div class="flex">
             <nav class="basis-[250px]">
@@ -9,26 +9,11 @@
                     <button type="button" id="blogMenuRemove">삭제</button>
                 </div>
                 <ul class="flex flex-col list border-double border-4 border-black py-2">
-                    {{--                    <li>--}}
-                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴1--}}
-                    {{--                        </button>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li>--}}
-                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴2--}}
-                    {{--                        </button>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li>--}}
-                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴3--}}
-                    {{--                        </button>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li>--}}
-                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴4--}}
-                    {{--                        </button>--}}
-                    {{--                    </li>--}}
                 </ul>
             </nav>
             <div class="basis-[calc(100%-250px)] pl-10 mt-[32px]">
-                <table class="w-full table-fixed text-left">
+                <input type="hidden" name="menu_data">
+                <table class="w-full table-fixed text-left menu-table">
                     <colgroup>
                         <col style="width:100px;">
                         <col>
@@ -36,11 +21,11 @@
                     <tbody>
                     <tr>
                         <th><label for="blogMenu">메뉴명</label></th>
-                        <td><input type="text" id="blogMenu" class="w-full form-input" name="menu"></td>
+                        <td><input type="text" id="blogMenu" class="w-full form-input"></td>
                     </tr>
                     <tr>
                         <th><label for="blogMenuEng">메뉴 영문명</label></th>
-                        <td><input type="text" id="blogMenuEng" class="w-full form-input" name="menu_en"></td>
+                        <td><input type="text" id="blogMenuEng" class="w-full form-input"></td>
                     </tr>
                     <tr>
                         <th>공개설정</th>
@@ -60,9 +45,14 @@
 
     <script>
         let list = document.querySelector('.list'),
+            menuTable = document.querySelector('.menu-table'),
             items = [...list.querySelectorAll('li')],
             dragObj = {},
-            inputData = {};
+            inputData = {
+                blogMenu: document.getElementById('blogMenu'),
+                blogMenuEng: document.getElementById('blogMenuEng'),
+                postState: document.querySelector('input[name="post_state"]:checked')
+            };
 
         // 메뉴 드래그 관련 이벤트
         list.addEventListener('dragstart', function (e) {
@@ -98,15 +88,48 @@
             list.append(...items);
         });
 
+        // 메뉴 클릭시 - 값 체인지 되는 메뉴 변경
+        menuTable.addEventListener('change', function (e) {
+            let eTarget = e.target;
+
+            // 현재 인풋 데이터 상태값 변경
+            inputData = {
+                blogMenu: document.getElementById('blogMenu'),
+                blogMenuEng: document.getElementById('blogMenuEng'),
+                postState: document.querySelector('input[name="post_state"]:checked'),
+            };
+
+            if (eTarget.tagName === 'INPUT') {
+                let activeBtn = document.querySelector('.list li button.bg-gray-200');
+
+                if (activeBtn !== null) {
+                    activeBtn.textContent = inputData.blogMenu.value;
+                    activeBtn.parentElement.dataset.blogData = JSON.stringify({
+                        blogMenu: inputData.blogMenu.value,
+                        blogMenuEng: inputData.blogMenuEng.value,
+                        postState: inputData.postState.value,
+                    });
+                }
+            }
+        });
+
         // 클릭시 메뉴 액티브 이벤트
         list.addEventListener('click', function (e) {
             let eTarget = e.target;
+
+            // 현재 인풋 데이터 상태값 변경
+            inputData = {
+                blogMenu: document.getElementById('blogMenu'),
+                blogMenuEng: document.getElementById('blogMenuEng'),
+                postState: document.querySelector('input[name="post_state"]'),
+            };
 
             [...document.querySelectorAll('.list li')].map(ele => {
                 ele.querySelector('button').classList.remove('bg-gray-200');
             });
 
             if (eTarget.tagName === 'BUTTON') {
+                let blogData = JSON.parse(eTarget.parentElement.dataset.blogData);
 
                 // 현재 클릭기준 버튼 기준 추가
                 dragObj.nowBtn = {
@@ -114,25 +137,40 @@
                 };
 
                 eTarget.classList.add('bg-gray-200');
+
+                inputData.blogMenu.value = blogData.blogMenu;
+                inputData.blogMenuEng.value = blogData.blogMenuEng;
+                document.querySelector(`input[name="post_state"][value="${blogData.postState}"]`).checked = true;
             }
         });
 
+        // 메뉴 추가시
         document.getElementById('blogMenuAdd').addEventListener('click', function (e) {
             let eTarget = e.target,
                 item = document.createElement('li'),
                 btn = document.createElement('button');
 
-            // 현재 인풋 데이터
+            // 현재 인풋 데이터 상태값 변경
             inputData = {
                 blogMenu: document.getElementById('blogMenu'),
                 blogMenuEng: document.getElementById('blogMenuEng'),
-                postState: document.querySelector('input[name="post_state"]:checked')
+                postState: document.querySelector('input[name="post_state"]:checked'),
             };
 
-            btn.type = "button";
-            btn.className = "first-node w-full text-left py-1 px-3";
+            item.dataset.blogData = JSON.stringify({
+                blogMenu: inputData.blogMenu.value,
+                blogMenuEng: inputData.blogMenuEng.value,
+                postState: inputData.postState.value,
+            });
+
+            btn.type = 'button';
+            btn.className = 'first-node w-full text-left py-1 px-3';
             btn.draggable = true;
             btn.textContent = inputData.blogMenu.value;
+
+            inputData.blogMenu.value = '';
+            inputData.blogMenuEng.value = '';
+            inputData.postState.checked = '';
 
             // li에서 현재 액티브된 클래스 유무 판별하는 상태값
             let btnClassState = [...eTarget.closest('nav').querySelectorAll('.list li')].filter(function (ele) {
@@ -166,19 +204,38 @@
         // 메뉴 삭제시
         document.getElementById('blogMenuRemove').addEventListener('click', function () {
             if (items.length) {
-                if(Object.keys(dragObj).length) {
+                if (Object.keys(dragObj).length) {
                     items = items.filter((ele) => {
                         if (ele === dragObj.nowBtn.ele) {
                             ele.remove();
                         }
                         return ele !== dragObj.nowBtn.ele
                     });
+
+                    inputData.blogMenu.value = '';
+                    inputData.blogMenuEng.value = '';
+                    inputData.postState.checked = '';
                 } else {
                     alert('메뉴를 클릭하여 삭제해주세요.');
                 }
             } else {
                 alert('메뉴를 생성해주세요.');
             }
+        });
+
+
+        document.forms.menu_form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let data = [];
+
+            items.map((ele, i) => {
+                data.push(JSON.parse(ele.dataset.blogData));
+            });
+
+            let input = document.querySelector('input[name="menu_data"]');
+            input.value = JSON.stringify(data);
+
+            this.submit();
         });
     </script>
 
