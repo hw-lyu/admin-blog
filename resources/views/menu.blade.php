@@ -9,22 +9,22 @@
                     <button type="button" id="blogMenuRemove">삭제</button>
                 </div>
                 <ul class="flex flex-col list border-double border-4 border-black py-2">
-                    <li>
-                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴1
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴2
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴3
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴4
-                        </button>
-                    </li>
+                    {{--                    <li>--}}
+                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴1--}}
+                    {{--                        </button>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li>--}}
+                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴2--}}
+                    {{--                        </button>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li>--}}
+                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴3--}}
+                    {{--                        </button>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li>--}}
+                    {{--                        <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">메뉴4--}}
+                    {{--                        </button>--}}
+                    {{--                    </li>--}}
                 </ul>
             </nav>
             <div class="basis-[calc(100%-250px)] pl-10 mt-[32px]">
@@ -150,7 +150,7 @@
             } else {
                 let lastItem = document.querySelector('.list li:last-of-type');
 
-                if(lastItem === null) {
+                if (lastItem === null) {
                     list.appendChild(item);
                 } else {
                     document.querySelector('.list li:last-of-type').after(item);
@@ -165,12 +165,20 @@
 
         // 메뉴 삭제시
         document.getElementById('blogMenuRemove').addEventListener('click', function () {
-            items = items.filter((ele) => {
-                if (ele === dragObj.nowBtn.ele) {
-                    ele.remove();
+            if (items.length) {
+                if(Object.keys(dragObj).length) {
+                    items = items.filter((ele) => {
+                        if (ele === dragObj.nowBtn.ele) {
+                            ele.remove();
+                        }
+                        return ele !== dragObj.nowBtn.ele
+                    });
+                } else {
+                    alert('메뉴를 클릭하여 삭제해주세요.');
                 }
-                return ele !== dragObj.nowBtn.ele
-            });
+            } else {
+                alert('메뉴를 생성해주세요.');
+            }
         });
     </script>
 
