@@ -11,7 +11,7 @@ class BlogMenu extends Model
 
     protected $fillable = [
         'name',
-        'name_ko',
+        'name_eng',
         'is_blind',
         'parent_id',
         'sort',
