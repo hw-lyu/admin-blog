@@ -9,6 +9,12 @@
                     <button type="button" id="blogMenuRemove">삭제</button>
                 </div>
                 <ul class="flex flex-col list border-double border-4 border-black py-2">
+                    @foreach($data as $key => $val)
+                        <li data-id="{{ $val['id'] }}" data-blog-data="{{ json_encode($val) }}">
+                            <button type="button" class="first-node w-full text-left py-1 px-3"
+                                    draggable="true">{{ $val['blogMenu'] }}</button>
+                        </li>
+                    @endforeach
                 </ul>
             </nav>
             <div class="basis-[calc(100%-250px)] pl-10 mt-[32px]">
@@ -30,8 +36,8 @@
                     <tr>
                         <th>공개설정</th>
                         <td>
-                            <label><input type="radio" name="post_state" value="false">공개</label>
-                            <label><input type="radio" name="post_state" value="true">비공개</label>
+                            <label><input type="radio" name="post_state" value="0">공개</label>
+                            <label><input type="radio" name="post_state" value="1">비공개</label>
                         </td>
                     </tr>
                     </tbody>
@@ -103,12 +109,18 @@
                 let activeBtn = document.querySelector('.list li button.bg-gray-200');
 
                 if (activeBtn !== null) {
-                    activeBtn.textContent = inputData.blogMenu.value;
-                    activeBtn.parentElement.dataset.blogData = JSON.stringify({
+                    let obj = {
                         blogMenu: inputData.blogMenu.value,
                         blogMenuEng: inputData.blogMenuEng.value,
                         postState: inputData.postState.value,
-                    });
+                    };
+
+                    if(activeBtn.parentElement.dataset?.id?.length) {
+                        obj.id = parseInt(activeBtn.parentElement.dataset.id);
+                    }
+
+                    activeBtn.textContent = inputData.blogMenu.value;
+                    activeBtn.parentElement.dataset.blogData = JSON.stringify(obj);
                 }
             }
         });
@@ -226,13 +238,17 @@
 
         document.forms.menu_form.addEventListener('submit', function (e) {
             e.preventDefault();
-            let data = [];
+
+            let input = document.querySelector('input[name="menu_data"]'),
+                data = [];
 
             items.map((ele, i) => {
-                data.push(JSON.parse(ele.dataset.blogData));
+                let blogData = JSON.parse(ele.dataset.blogData);
+                blogData.sort = i + 1;
+
+                data.push(blogData);
             });
 
-            let input = document.querySelector('input[name="menu_data"]');
             input.value = JSON.stringify(data);
 
             this.submit();
