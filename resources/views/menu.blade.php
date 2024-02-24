@@ -19,6 +19,7 @@
             </nav>
             <div class="basis-[calc(100%-250px)] pl-10 mt-[32px]">
                 <input type="hidden" name="menu_data">
+                <input type="hidden" name="remove_menu_data">
                 <table class="w-full table-fixed text-left menu-table">
                     <colgroup>
                         <col style="width:100px;">
@@ -53,6 +54,7 @@
         let list = document.querySelector('.list'),
             menuTable = document.querySelector('.menu-table'),
             items = [...list.querySelectorAll('li')],
+            removeItems = [],
             dragObj = {},
             inputData = {
                 blogMenu: document.getElementById('blogMenu'),
@@ -115,7 +117,7 @@
                         postState: inputData.postState.value,
                     };
 
-                    if(activeBtn.parentElement.dataset?.id?.length) {
+                    if (activeBtn.parentElement.dataset?.id?.length) {
                         obj.id = parseInt(activeBtn.parentElement.dataset.id);
                     }
 
@@ -219,6 +221,10 @@
                 if (Object.keys(dragObj).length) {
                     items = items.filter((ele) => {
                         if (ele === dragObj.nowBtn.ele) {
+                            if (ele.dataset.id) {
+                                removeItems.push(ele);
+                            }
+
                             ele.remove();
                         }
                         return ele !== dragObj.nowBtn.ele
@@ -240,16 +246,29 @@
             e.preventDefault();
 
             let input = document.querySelector('input[name="menu_data"]'),
-                data = [];
+                removeInput = document.querySelector('input[name="remove_menu_data"]'),
+                data = [],
+                removeData = [];
 
-            items.map((ele, i) => {
-                let blogData = JSON.parse(ele.dataset.blogData);
-                blogData.sort = i + 1;
+            if (items.length) {
+                items.map((ele, i) => {
+                    let blogData = JSON.parse(ele.dataset.blogData);
+                    blogData.sort = i + 1;
 
-                data.push(blogData);
-            });
+                    data.push(blogData);
+                });
+            }
+
+            if (removeItems.length) {
+                removeItems.map(ele => {
+                    let removeBlogData = JSON.parse(ele.dataset.blogData);
+
+                    removeData.push(removeBlogData);
+                });
+            }
 
             input.value = JSON.stringify(data);
+            removeInput.value = JSON.stringify(removeData);
 
             this.submit();
         });
