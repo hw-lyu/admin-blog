@@ -46,11 +46,12 @@ class BlogMenuController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->except(['_token']);
 
         $menuJson = json_decode($data['menu_data'], true);
+        $removeMenuJson = json_decode($data['remove_menu_data'], true);
         $menuData = [];
 
         /*
@@ -82,6 +83,17 @@ class BlogMenuController extends Controller
             }
         }
 
-        return back();
+        /**
+         * 메뉴 삭제 로직
+         *
+         * 소프트 딜리트
+         */
+        foreach ($removeMenuJson as $removeMenu) {
+            $this->blogMenu
+                ->where('id', $removeMenu['id'])
+                ->delete();
+        }
+
+        return back()->with('message', '등록이 완료되었습니다.');
     }
 }
