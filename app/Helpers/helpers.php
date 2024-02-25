@@ -7,7 +7,7 @@ if (!function_exists('file_s3_upload')) {
      * S3 파일 스토리지 업로드
      *
      * @param array $nowFiles 클라이언트에 현재 업로드 되있는 파일들
-     * @param object $requestFiles 요청된 업로드될 파일들
+     * @param array $requestFiles 요청된 업로드될 파일들
      * @param string $path 파일경로
      *
      * @return array
