@@ -53,12 +53,7 @@ class BlogInformationController extends Controller
         try {
 
             if ($request->has('profile_img') || $request->has('cover_img')) {
-                foreach ($request->file() as $name => $file) {
-                    $fileName = "information/{$name}_" . now()->format('Ymdhisu') . ".{$file->extension()}";
-
-                    $files["{$name}_path"] = $fileName;
-                    Storage::disk('s3')->put($fileName, $file->getContent());
-                }
+                $files = file_s3_upload(nowFiles: $files, requestFiles: $request->file(), path: 'information');
             }
 
             $this->blogInformation->create([
