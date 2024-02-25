@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogPostController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BlogInformationController;
@@ -22,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/information', BlogInformationController::class);
     Route::resource('/menu', BlogMenuController::class);
+    Route::resource('/post', BlogPostController::class);
 });
 
 // 로그인
