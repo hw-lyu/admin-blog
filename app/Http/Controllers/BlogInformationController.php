@@ -51,7 +51,6 @@ class BlogInformationController extends Controller
         ];
 
         try {
-
             if ($request->has('profile_img') || $request->has('cover_img')) {
                 $files = file_s3_upload(nowFiles: $files, requestFiles: $request->file(), path: 'information');
             }
