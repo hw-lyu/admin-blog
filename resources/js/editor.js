@@ -3,6 +3,7 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 if (document?.querySelector('#editor')) {
+    let forms = document.forms, content = document.querySelector('textarea[name="content"]');
     const editor = new Editor({
         el: document.querySelector('#editor'),
         language: 'ko-KR',
@@ -15,19 +16,13 @@ if (document?.querySelector('#editor')) {
                 formData.append('post_img', e);
 
                 axios({
-                    url : '/api/v1/file/upload',
-                    method : 'post',
-                    headers: {
+                    url: '/api/v1/file/upload', method: 'post', headers: {
                         "Content-Type": "multipart/form-data",
-                    },
-                    data : formData,
-                    auth: {
-                        username: '',
-                        password: ''
+                    }, data: formData, auth: {
+                        username: 't', password: 't'
                     }
-                }).then(function(res) {
-                    let data = res.data,
-                        imageSrc = document.getElementById('toastuiAltTextInput').value ?? 'image',
+                }).then(function (res) {
+                    let data = res.data, imageSrc = document.getElementById('toastuiAltTextInput').value ?? 'image',
                         imageUrl = `![${imageSrc}](//lumii-photo.s3.ap-northeast-2.amazonaws.com/${data.data.file_path})`;
 
                     alert(data.msg);
@@ -35,11 +30,61 @@ if (document?.querySelector('#editor')) {
                     document.querySelector('.toastui-editor-popup.toastui-editor-popup-add-image').style = "display:none;"
 
                     editor.insertText(imageUrl);
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error(error);
                 })
             }
         }
+    });
+
+    if (content) {
+        editor.setHTML(content.value);
+    }
+
+    if (forms.write_form) {
+        forms.write_form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            this.querySelector('textarea[name="content"]').value = editor.getHTML();
+            this.submit();
+        });
+    }
+
+    if (forms.send_form) {
+        document.forms.send_form.addEventListener('click', function (e) {
+            let eTarget = e.target, btnObj = {
+                'destroy': {
+                    'method': 'POST', 'action': document.querySelector('input[name="destroy_action"]').value
+                }, 'update': {
+                    'method': 'POST', 'action': document.querySelector('input[name="update_action"]').value
+                }
+            }, method = document.querySelector('input[name="_method"]');
+
+            this.querySelector('textarea[name="content"]').value = editor.getHTML();
+
+            if (eTarget.classList.contains('btn-destroy')) {
+                this.method = btnObj.destroy.method;
+                this.action = btnObj.destroy.action;
+                method.value = "DELETE";
+                this.submit();
+            }
+
+            if (eTarget.classList.contains('btn-update')) {
+                this.method = btnObj.update.method;
+                this.action = btnObj.update.action;
+                method.value = "PATCH";
+                this.submit();
+            }
+        });
+    }
+}
+
+if (document?.querySelector('#viewer')) {
+    const viewer = Editor.factory({
+        el: document.querySelector('#viewer'),
+        viewer: true,
+        height: '600px',
+        initialValue: document.querySelector('textarea[name="content"]').value
     });
 }
 

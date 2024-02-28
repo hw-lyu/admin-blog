@@ -37,8 +37,8 @@
                     <tr>
                         <th>공개설정</th>
                         <td>
-                            <label><input type="radio" name="post_state" value="0">공개</label>
-                            <label><input type="radio" name="post_state" value="1">비공개</label>
+                            <label><input type="radio" name="post_state" value="1">공개</label>
+                            <label><input type="radio" name="post_state" value="0">비공개</label>
                         </td>
                     </tr>
                     </tbody>
