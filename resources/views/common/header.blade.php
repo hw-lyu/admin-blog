@@ -10,7 +10,7 @@
             <h2 class="sr-only">유용한 메뉴</h2>
             <ul class="flex items-center text-[0.825em]">
                 <li class="pr-5"><a href="">내 블로그</a></li>
-                <li><a href="{{ route('post.create') }}">글쓰기</a></li>
+                <li><a href="{{ route('post.index') }}">글쓰기</a></li>
             </ul>
         </nav>
     </div>
