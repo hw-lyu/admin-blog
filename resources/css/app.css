@@ -25,12 +25,6 @@ header {
     @apply px-3;
 }
 
-.left-wrap {
-    position: sticky;
-    top: 0;
-    left: 0;
-}
-
 .right-wrap {
     @apply border-l border-y-gray-200;
     flex-basis: calc(100% - 160px);
