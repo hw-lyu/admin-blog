@@ -27,8 +27,9 @@
                 <th><label for="blogProfileImg">프로필 사진</label></th>
                 <td>
                     <div class="flex flex-col mb-1">
-                        <label class="flex flex-col">현재 파일명 : <input type="text" class="p-1" name="now_profile_img" value="{{ $data['profile_img_path'] }}" readonly></label>
-                        <img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/{{ $data['profile_img_path'] }}" alt="" width="150">
+                        <label><input type="hidden" class="p-1" name="now_profile_id" value="{{ $data['profileFile']['id'] }}"></label>
+                        <label class="flex flex-col">현재 파일명 : <input type="text" class="p-1" name="now_profile_img" value="{{ $data['profileFile']['file_path'] }}" readonly></label>
+                        <img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/{{ $data['profileFile']['file_path'] }}" alt="" width="150">
                     </div>
                     <input type="file" id="blogProfileImg" name="profile_img">
                 </td>
@@ -37,8 +38,9 @@
                 <th><label for="blogCoverImg">불로그 커버 이미지</label></th>
                 <td>
                     <div class="flex flex-col mt-2 mb-1">
-                        <label class="flex flex-col">현재 파일명 : <input type="text" class="p-1" name="now_cover_img" value="{{ $data['cover_img_path'] }}" readonly></label>
-                        <img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/{{ $data['cover_img_path'] }}" alt="" width="150">
+                        <label><input type="hidden" class="p-1" name="now_cover_id" value="{{ $data['coverFile']['id'] }}"></label>
+                        <label class="flex flex-col">현재 파일명 : <input type="text" class="p-1" name="now_cover_img" value="{{ $data['coverFile']['file_path'] }}" readonly></label>
+                        <img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/{{ $data['coverFile']['file_path'] }}" alt="" width="150">
                     </div>
                     <input type="file" id="blogCoverImg" name="cover_img">
                 </td>

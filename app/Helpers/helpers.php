@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('file_s3_upload')) {
+
     /**
      * S3 파일 스토리지 업로드
      *
@@ -17,9 +18,20 @@ if (!function_exists('file_s3_upload')) {
         foreach ($requestFiles as $name => $file) {
             $fileName = "{$path}/{$name}_" . now()->format('Ymdhisu') . ".{$file->extension()}";
 
-            // 배명 키 값은 {name}_path로 정의한다. ex) cover_img_path, profile_img_path
-            $nowFiles["{$name}_path"] = $fileName;
+            $nowFiles[$name]["{$name}_path"] = $fileName;
+
             Storage::disk('s3')->put($fileName, $file->getContent());
+
+            $blogFile = new \App\Models\BlogFile;
+            $blogFile->file_name = str_replace($path.'/', '', $fileName);
+            $blogFile->file_path = $fileName;
+            $blogFile->file_size = $file->getSize();
+            $blogFile->file_mine = $file->getMimeType();
+            $blogFile->created_at = now();
+
+            $blogFile->save();
+
+            $nowFiles[$name]['id'] = $blogFile->id;
         }
 
         return $nowFiles;

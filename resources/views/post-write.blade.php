@@ -15,6 +15,12 @@
         <div id="editor"></div>
         <input type="text" name="tag_list" class="w-full form-input mt-3" placeholder="태그를 입력해주세요. 양식 ex) 단어1|단어2">
         <textarea name="content" class="hidden"></textarea>
+        <input type="hidden" name="thumbnail_id">
+        <div class="hidden-tag hidden"></div>
+        <div class="flex mt-5">
+            <label class="mr-2"><input type="radio" name="post_state" class="mr-2" value="1">공개</label>
+            <label><input type="radio" name="post_state" class="mr-2" value="0">비공개</label>
+        </div>
         <div class="flex justify-center mt-5">
             <button type="submit" class="py-2 px-5 rounded-md text-white bg-purple-500">등록</button>
         </div>

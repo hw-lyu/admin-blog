@@ -18,7 +18,8 @@ class BlogPost extends Model
         'menu_id',
         'write',
         'is_blind',
-        'tag_list'
+        'tag_list',
+        'thumbnail_id'
     ];
 
     /**
@@ -28,5 +29,14 @@ class BlogPost extends Model
      */
     public function menu() : HasOne {
         return $this->hasOne(BlogMenu::class, 'id', 'menu_id');
+    }
+
+    /**
+     * 글의 썸네일 이미지 - 파일의 아이디 매칭 (1:1)
+     *
+     * @return HasOne
+     */
+    public function thumbnail() : HasOne {
+        return $this->hasOne(BlogFile::class, 'id', 'thumbnail_id');
     }
 }

@@ -25,12 +25,19 @@ class BlogInformationController extends Controller
      */
     public function index(): Application|Factory|View|FoundationApplication
     {
-        $data = $this->blogInformation->latest()->first() ?? [
+        $data = $this->blogInformation
+            ->with(['profileFile', 'coverFile'])
+            ->latest()
+            ->first() ?? [
             'name' => '',
             'nick_name' => '',
             'introduce' => '',
-            'profile_img_path' => '',
-            'cover_img_path' => ''
+            'coverFile' => [
+                'file_path' => ''
+            ],
+            'profileFile' => [
+                'file_path' => ''
+            ]
         ];
 
         return view('index', ['data' => $data]);
@@ -46,10 +53,16 @@ class BlogInformationController extends Controller
     {
         $data = $request->except('_token');
         $files = [
-            'profile_img_path' => $data['now_profile_img'],
-            'cover_img_path' => $data['now_cover_img']
+            'profile_img' => [
+                'id' => $data['now_profile_id']
+            ],
+            'cover_img' => [
+                'id' => $data['now_cover_id']
+            ]
         ];
 
+        //profile_file_id
+        //cover_file_id
         try {
             if ($request->has('profile_img') || $request->has('cover_img')) {
                 $files = file_s3_upload(nowFiles: $files, requestFiles: $request->file(), path: 'information');
@@ -59,7 +72,8 @@ class BlogInformationController extends Controller
                 'name' => $data['name'],
                 'nick_name' => $data['nick_name'],
                 'introduce' => $data['introduce'],
-                ...$files
+                'profile_file_id' => $files['profile_img']['id'],
+                'cover_file_id' => $files['profile_img']['id'],
             ]);
 
         } catch (\Exception $e) {

@@ -14,6 +14,7 @@
         <div><strong>메뉴명: </strong> {{ !empty($post['menu']) ? $post['menu']['name'] : '-' }}({{ !empty($post['menu']) ? $post['menu']['name_eng'] : '-' }})</div>
         <div class="mt-1"><strong>제목: </strong> {{ $post['name'] }}</div>
         <div class="mt-1"><strong>태그리스트: </strong> {{ implode('|', json_decode($post['tag_list'], true)) }}</div>
+        <div class="mt-1"><strong>글 공개여부: </strong> {{ $post['is_blind'] === 1 ? '공개' : '비공개' }}</div>
         <textarea name="content" class="hidden">{{ $post['content'] }}</textarea>
         <div id="viewer" class="py-1 px-3 bg-gray-100 mt-3"></div>
     </div>

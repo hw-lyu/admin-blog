@@ -25,7 +25,9 @@ class BlogPostRequest extends FormRequest
             'name' => 'required|string',
             'content' => 'required|string',
             'menu_id' => 'required|integer',
+            'thumbnail_id' => 'sometimes|integer',
             'write' => 'sometimes|string',
+            'post_state' => 'sometimes|string',
             'tag_list' => 'required|string',
         ];
     }

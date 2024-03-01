@@ -23,7 +23,7 @@ if (document?.querySelector('#editor')) {
                     }
                 }).then(function (res) {
                     let data = res.data, imageSrc = document.getElementById('toastuiAltTextInput').value ?? 'image',
-                        imageUrl = `![${imageSrc}](//lumii-photo.s3.ap-northeast-2.amazonaws.com/${data.data.file_path})`;
+                        imageUrl = `![${imageSrc}](//lumii-photo.s3.ap-northeast-2.amazonaws.com/${data.post.post_path}?id=${data.post.id})`;
 
                     alert(data.msg);
 
@@ -45,7 +45,25 @@ if (document?.querySelector('#editor')) {
         forms.write_form.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            let hiddenTag = document.querySelector('.hidden-tag'),
+                url = hiddenTag.querySelector('img')?.src ?? '';
+
             this.querySelector('textarea[name="content"]').value = editor.getHTML();
+            hiddenTag.innerHTML = this.querySelector('textarea[name="content"]').value;
+
+            if(url) {
+                let searchParams = new URL(url).searchParams,
+                    imgId = -1;
+
+                for (const param of searchParams) {
+                    if (param[0] === 'id') {
+                        imgId = parseInt(param[1]);
+                    }
+                }
+
+                this.querySelector('input[name="thumbnail_id"]').value = imgId === -1 ? '' : imgId;
+            }
+
             this.submit();
         });
     }
@@ -61,6 +79,24 @@ if (document?.querySelector('#editor')) {
             }, method = document.querySelector('input[name="_method"]');
 
             this.querySelector('textarea[name="content"]').value = editor.getHTML();
+
+            let hiddenTag = document.querySelector('.hidden-tag'),
+                url = hiddenTag.querySelector('img')?.src ?? '';
+
+            hiddenTag.innerHTML = this.querySelector('textarea[name="content"]').value;
+
+            if(url) {
+                let searchParams = new URL(url).searchParams,
+                    imgId = -1;
+
+                for (const param of searchParams) {
+                    if (param[0] === 'id') {
+                        imgId = parseInt(param[1]);
+                    }
+                }
+
+                this.querySelector('input[name="thumbnail_id"]').value = imgId === -1 ? '' : imgId;
+            }
 
             if (eTarget.classList.contains('btn-destroy')) {
                 this.method = btnObj.destroy.method;
