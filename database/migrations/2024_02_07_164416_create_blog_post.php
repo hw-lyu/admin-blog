@@ -17,6 +17,7 @@ return new class extends Migration
             $table->mediumText('content')->comment('글내용');
             $table->unsignedInteger('menu_id')->comment('메뉴 아이디');
             $table->string('write', 50)->comment('글쓴이');
+            $table->unsignedInteger('thumbnail_id')->comment('썸네일 이미지 / 없으면 에디터 첫번째 이미지 아이디 저장');
             $table->tinyInteger('is_blind')->default(1)->comment('글 공개여부 0:비공개 1:공개');
             $table->json('tag_list')->comment('태그리스트');
             $table->timestamps();

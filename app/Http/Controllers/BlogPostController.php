@@ -26,7 +26,8 @@ class BlogPostController extends Controller
     public function index(): Application|Factory|View|FoundationApplication
     {
         $post = $this->blogPost
-            ->with(['menu'])
+            ->with(['menu', 'thumbnail'])
+            ->orderBy('id', 'desc')
             ->paginate(5) ?? [
             [
                 'id' => 0,
@@ -35,7 +36,8 @@ class BlogPostController extends Controller
                 'menu' => [
                     'name' => '',
                     'name_eng' => ''
-                ]
+                ],
+                'post_state' => ''
             ]
         ];
 
@@ -60,7 +62,9 @@ class BlogPostController extends Controller
             'menu' => [
                 'name' => '',
                 'name_eng' => ''
-            ]
+            ],
+            'post_state' => '',
+            'thumbnail_id' => ''
         ];
 
         return view('post-view', ['post' => $post]);
@@ -104,18 +108,21 @@ class BlogPostController extends Controller
         $tagListJsonData = json_encode(explode('|', $post['tag_list']));
 
         try {
-            $this->blogPost->create([
+            $data = $this->blogPost->create([
                 'name' => $post['name'],
                 'content' => $post['content'],
                 'menu_id' => $post['menu_id'],
                 'write' => $request->user()['email'],
                 'tag_list' => $tagListJsonData,
+                'is_blind' => $post['post_state'],
+                'thumbnail_id' => $post['thumbnail_id']
             ]);
+
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
 
-        return back()->with(['message' => '등록이 완료되었습니다.']);
+        return redirect()->route('post.show', ['post' => $data->id])->with(['message' => '등록이 완료되었습니다.']);
     }
 
     /**
@@ -140,6 +147,8 @@ class BlogPostController extends Controller
                     'menu_id' => $post['menu_id'],
                     'write' => $request->user()['email'],
                     'tag_list' => $tagListJsonData,
+                    'is_blind' => $post['post_state'],
+                    'thumbnail_id' => $post['thumbnail_id']
                 ]);
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
@@ -165,7 +174,9 @@ class BlogPostController extends Controller
             'menu' => [
                 'name' => '',
                 'name_eng' => ''
-            ]
+            ],
+            'post_state' => '',
+            'thumbnail_id' => ''
         ];
 
         $menus = $this

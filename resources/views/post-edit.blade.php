@@ -16,7 +16,10 @@
                 <span class="mb-1">메뉴 선택</span>
                 <select name="menu_id" class="mb-3">
                     @foreach($menus as $menu)
-                        <option value="{{ $menu['id'] }}" {{$post['menu_id'] === $menu['id'] ? 'selected' : ''}}>{{ $menu['blogMenu'] }}({{ $menu['blogMenuEng'] }})</option>
+                        <option
+                            value="{{ $menu['id'] }}" {{$post['menu_id'] === $menu['id'] ? 'selected' : ''}}>{{ $menu['blogMenu'] }}
+                            ({{ $menu['blogMenuEng'] }})
+                        </option>
                     @endforeach
                 </select>
             </label>
@@ -25,6 +28,15 @@
             <label class="mt-1">태그리스트 <input type="text" name="tag_list" class="w-full form-input mb-1"
                                              value="{{ implode('|', json_decode($post['tag_list'], true)) }}"></label>
             <textarea name="content" class="hidden">{{$post['content']}}</textarea>
+            <input type="hidden" name="thumbnail_id">
+            <div class="hidden-tag hidden"></div>
+            <div class="flex flex-col mt-1">
+                <div>글 공개여부</div>
+                <div class="flex">
+                    <label class="mr-2"><input type="radio" name="post_state" class="mr-2" value="1" @checked($post['is_blind'] === 1)>공개</label>
+                    <label><input type="radio" name="post_state" class="mr-2" value="0" @checked($post['is_blind'] === 0)>비공개</label>
+                </div>
+            </div>
             <div id="editor" class="py-1 mt-3"></div>
         </div>
     </form>
