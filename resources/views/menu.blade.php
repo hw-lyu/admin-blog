@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title', '메뉴관리')
 @section('right-content')
     <form action="{{ route('menu.store') }}" method="post" name="menu_form">
         @csrf
