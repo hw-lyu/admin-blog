@@ -45,11 +45,12 @@ if (document?.querySelector('#editor')) {
         forms.write_form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            let hiddenTag = document.querySelector('.hidden-tag'),
-                url = hiddenTag.querySelector('img')?.src ?? '';
+            let hiddenTag = document.querySelector('.hidden-tag');
 
             this.querySelector('textarea[name="content"]').value = editor.getHTML();
             hiddenTag.innerHTML = this.querySelector('textarea[name="content"]').value;
+
+            let url = hiddenTag.querySelector('img')?.src ?? '';
 
             if(url) {
                 let searchParams = new URL(url).searchParams,
@@ -78,12 +79,12 @@ if (document?.querySelector('#editor')) {
                 }
             }, method = document.querySelector('input[name="_method"]');
 
+            let hiddenTag = document.querySelector('.hidden-tag');
+
             this.querySelector('textarea[name="content"]').value = editor.getHTML();
-
-            let hiddenTag = document.querySelector('.hidden-tag'),
-                url = hiddenTag.querySelector('img')?.src ?? '';
-
             hiddenTag.innerHTML = this.querySelector('textarea[name="content"]').value;
+
+            let url = hiddenTag.querySelector('img')?.src ?? '';
 
             if(url) {
                 let searchParams = new URL(url).searchParams,
