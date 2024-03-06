@@ -24,7 +24,10 @@ class FrontController extends Controller
         $menu = [];
 
         if (!empty($menuEng)) {
-            $menu = BlogMenu::where('name_eng', $menuEng);
+            $menu = BlogMenu::where([
+                'name_eng' => $menuEng,
+                'is_blind' => 1
+            ]);
 
             if (!$menu->exists()) {
                 return response()->json(['error' => '메뉴명이 없습니다.']);
@@ -33,10 +36,14 @@ class FrontController extends Controller
 
         $postList = $this->blogPost
             ->with(['menu', 'thumbnail'])
+            ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
             ->when($menuEng, fn($query) => $query->where('menu_id', $menu->first()->id))
-            ->where('is_blind', 1)
-            ->selectRaw('id, name, content, tag_list, view_count, menu_id, thumbnail_id, created_at')
-            ->orderBy('id', 'desc')
+            ->where([
+                'blog_post.is_blind' => 1,
+                'blog_menus.is_blind' => 1
+            ])
+            ->selectRaw('blog_post.id, blog_post.name, blog_post.content, blog_post.tag_list, blog_post.view_count, blog_post.is_blind, blog_post.menu_id, blog_post.thumbnail_id, blog_post.created_at')
+            ->orderBy('blog_post.id', 'desc')
             ->cursorPaginate(3);
 
         return response()->json(['postList' => $postList]);

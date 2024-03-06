@@ -23,7 +23,6 @@
     </div>
     <div class="inner flex flex-col">
         <h2 class="pt-10 pb-2">최근 글 리스트</h2>
-        <input type="hidden" id="nextPageUrl" value="{{ $postList->nextPageUrl() }}">
         <ul class="post-list flex flex-col"></ul>
     </div>
 
@@ -68,7 +67,7 @@
                                      ${ele['thumbnail'] ? "<img src='//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}'>" : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
                                 </div>
                                 <div class="txt-box">
-                                    <div>id : ${ele['id']}, 조회수 테스트 ${ele['view_count'] ?? '-'}</div>
+                                    <div>menu_is_blind: ${ele['menu']['is_blind']}, is_blind: ${ele['is_blind']}, id : ${ele['id']}, 조회수 테스트 ${ele['view_count'] ?? '-'}</div>
                                     <div class="menu">${ele['menu']['name'] ?? '-'}</div>
                                     <div class="group">
                                         <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
