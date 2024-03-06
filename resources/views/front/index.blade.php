@@ -58,9 +58,12 @@
                 let list = response.postList;
 
                 list.data.map(ele => {
-                    let item = document.createElement('li');
-                    item.className = 'item';
+                    let item = document.createElement('li'),
+                        divHidden = document.createElement('div');
+                    divHidden.className = "hidden";
+                    divHidden.innerHTML = ele['content'];
 
+                    item.className = 'item';
                     item.innerHTML = `
                             <a href="view/${ele['id']}">
                                 <div class="img">
@@ -71,9 +74,9 @@
                                     <div class="menu">${ele['menu']['name'] ?? '-'}</div>
                                     <div class="group">
                                         <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
-                                        <p class="info md:line-clamp-5 line-clamp-3">${ele['content']}</p>
+                                        <p class="info md:line-clamp-5 line-clamp-3">${divHidden.innerText}</p>
                                     </div>
-                                    <p class="date">${ele['created_at']}</p>
+                                    <p class="date">${new Date(ele['created_at']).toLocaleString('ko-KR')}</p>
                                 </div>
                             </a>
                         `;
@@ -90,7 +93,7 @@
                         entries.forEach((entry) => {
                             // 주시 대상이 뷰포트 안으로 들어오면
                             if (entry.intersectionRatio > 0) {
-                                if(response.next_cursor?.length) {
+                                if (response.next_cursor?.length) {
                                     items(response.next_cursor);
                                 } else {
                                     alert('마지막 리스트였습니다 :)');
