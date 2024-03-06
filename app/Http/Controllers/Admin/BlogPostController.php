@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogPostRequest;
 use App\Models\BlogMenu;
 use App\Models\BlogPost;
@@ -10,7 +11,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class BlogPostController extends Controller
 {
@@ -41,8 +41,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-
-        return view('post-list', ['post' => $post]);
+        return view('Admin.post-list', ['post' => $post]);
     }
 
     /**
@@ -67,7 +66,7 @@ class BlogPostController extends Controller
             'thumbnail_id' => ''
         ];
 
-        return view('post-view', ['post' => $post]);
+        return view('Admin.post-view', ['post' => $post]);
     }
 
     /**
@@ -93,7 +92,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-        return view('post-write', ['menus' => $menus]);
+        return view('Admin.post-write', ['menus' => $menus]);
     }
 
     /**
@@ -114,6 +113,7 @@ class BlogPostController extends Controller
                 'menu_id' => $post['menu_id'],
                 'write' => $request->user()['email'],
                 'tag_list' => $tagListJsonData,
+                'view_count' => 0,
                 'is_blind' => $post['post_state'],
                 'thumbnail_id' => $post['thumbnail_id']
             ]);
@@ -150,6 +150,7 @@ class BlogPostController extends Controller
                     'is_blind' => $post['post_state'],
                     'thumbnail_id' => $post['thumbnail_id']
                 ]);
+
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -195,7 +196,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-        return view('post-edit', ['post' => $post, 'menus' => $menus]);
+        return view('Admin.post-edit', ['post' => $post, 'menus' => $menus]);
     }
 
     /**

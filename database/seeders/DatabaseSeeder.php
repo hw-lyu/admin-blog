@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\BlogFile;
+use App\Models\BlogInformation;
+use App\Models\BlogMenu;
+use App\Models\BlogPost;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,12 +17,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(1)->create();
-        // \App\Models\User::factory(10)->create();
+        User::factory()->count(1)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        BlogFile::factory()->count(50)->create();
+
+        BlogInformation::factory()
+            ->count(50)
+            ->state(new Sequence(
+                fn(Sequence $sequence) => [
+                    'profile_file_id' => BlogFile::all()->random()['id'],
+                    'cover_file_id' => BlogFile::all()->random()['id']
+                ],
+            ))
+            ->create();
+
+        BlogMenu::factory()
+            ->count(50)
+            ->sequence(fn(Sequence $sequence) => ['parent_id' => $sequence->index + 1])
+            ->create();
+
+        BlogPost::factory()
+            ->count(50)
+            ->state(new Sequence(fn(Sequence $sequence) => [
+                'menu_id' => BlogMenu::all()->random()['id'],
+                'write' => User::all()->random()['email'],
+                'thumbnail_id' => BlogFile::all()->random()['id']
+            ]
+            ))
+            ->create();
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\BlogMenu;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class BlogMenuController extends Controller
 {
@@ -37,7 +38,7 @@ class BlogMenuController extends Controller
             'sort' => '',
         ];
 
-        return view('menu', ['data' => $data]);
+        return view('Admin.menu', ['data' => $data]);
     }
 
     /**

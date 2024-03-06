@@ -52,7 +52,7 @@ if (document?.querySelector('#editor')) {
 
             let url = hiddenTag.querySelector('img')?.src ?? '';
 
-            if(url) {
+            if (url) {
                 let searchParams = new URL(url).searchParams,
                     imgId = -1;
 
@@ -62,7 +62,9 @@ if (document?.querySelector('#editor')) {
                     }
                 }
 
-                this.querySelector('input[name="thumbnail_id"]').value = imgId === -1 ? '' : imgId;
+                this.querySelector('input[name="thumbnail_id"]').value = imgId;
+            } else {
+                this.querySelector('input[name="thumbnail_id"]').value = null;
             }
 
             this.submit();
@@ -72,21 +74,21 @@ if (document?.querySelector('#editor')) {
     if (forms.send_form) {
         document.forms.send_form.addEventListener('click', function (e) {
             let eTarget = e.target, btnObj = {
-                'destroy': {
-                    'method': 'POST', 'action': document.querySelector('input[name="destroy_action"]').value
-                }, 'update': {
-                    'method': 'POST', 'action': document.querySelector('input[name="update_action"]').value
-                }
-            }, method = document.querySelector('input[name="_method"]');
-
-            let hiddenTag = document.querySelector('.hidden-tag');
+                    'destroy': {
+                        'method': 'POST', 'action': document.querySelector('input[name="destroy_action"]').value
+                    }, 'update': {
+                        'method': 'POST', 'action': document.querySelector('input[name="update_action"]').value
+                    }
+                },
+                method = document.querySelector('input[name="_method"]'),
+                hiddenTag = document.querySelector('.hidden-tag');
 
             this.querySelector('textarea[name="content"]').value = editor.getHTML();
             hiddenTag.innerHTML = this.querySelector('textarea[name="content"]').value;
 
             let url = hiddenTag.querySelector('img')?.src ?? '';
 
-            if(url) {
+            if (url) {
                 let searchParams = new URL(url).searchParams,
                     imgId = -1;
 
@@ -96,7 +98,9 @@ if (document?.querySelector('#editor')) {
                     }
                 }
 
-                this.querySelector('input[name="thumbnail_id"]').value = imgId === -1 ? '' : imgId;
+                this.querySelector('input[name="thumbnail_id"]').value = imgId;
+            } else {
+                this.querySelector('input[name="thumbnail_id"]').value = null;
             }
 
             if (eTarget.classList.contains('btn-destroy')) {

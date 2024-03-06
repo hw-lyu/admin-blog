@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 @section('title', '글 보기')
 @section('right-content')
     <form action="" method="" name="send_form">

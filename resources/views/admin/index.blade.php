@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 @section('title', '메인')
 @section('right-content')
     <form action="{{ route('information.store') }}" method="post" enctype="multipart/form-data">
