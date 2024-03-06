@@ -15,13 +15,13 @@ RUN composer global require laravel/installer
 RUN ["/bin/bash", "-c", "echo PATH=$PATH:~/.composer/vendor/bin/ >> ~/.bashrc"]
 RUN ["/bin/bash", "-c", "source ~/.bashrc"]
 
-RUN mkdir -p /home/Admin-blog/storage && \
-    mkdir -p /home/Admin-blog/bootstrap/cache
+RUN mkdir -p /home/admin-blog/storage && \
+    mkdir -p /home/admin-blog/bootstrap/cache
 
-RUN chown -R $USER:www-data /home/Admin-blog/storage
-RUN chown -R $USER:www-data /home/Admin-blog/bootstrap/cache
-RUN chmod 775 -R /home/Admin-blog/bootstrap/cache
-RUN chmod 775 -R /home/Admin-blog/storage
+RUN chown -R $USER:www-data /home/admin-blog/storage
+RUN chown -R $USER:www-data /home/admin-blog/bootstrap/cache
+RUN chmod 775 -R /home/admin-blog/bootstrap/cache
+RUN chmod 775 -R /home/admin-blog/storage
 
 EXPOSE 9000
 CMD ["php-fpm"]
