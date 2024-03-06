@@ -48,9 +48,10 @@
 
         // 리스트 - 무한 스크롤
         const postList = document.querySelector('.post-list');
+        const PATH = `/api/v1${location.pathname}?cursor=`;
 
         const items = async function (nextCursor = '') {
-            fetch(`/api/v1${location.pathname}?cursor=${nextCursor}`, {
+            fetch(`${PATH}${nextCursor}`, {
                 method: 'get'
             }).then(function (response) {
                 return response.json();
