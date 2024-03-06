@@ -46,7 +46,7 @@
             }
         });
 
-        // 무한 스크롤
+        // 리스트 - 무한 스크롤
         const postList = document.querySelector('.post-list');
 
         const items = async function (nextCursor = '') {
@@ -105,6 +105,5 @@
         };
 
         items();
-
     </script>
 @endsection
