@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-w-[1180px]">
-@include('common.toast-popup')
+@include('admin.common.toast-popup')
 <form action="{{route('login.authenticate')}}" method="post" class="h-full">
     @csrf
     <div class="login-box">

@@ -25,10 +25,10 @@ class BlogPostRequest extends FormRequest
             'name' => 'required|string',
             'content' => 'required|string',
             'menu_id' => 'required|integer',
-            'thumbnail_id' => 'sometimes|integer',
+            'thumbnail_id' => 'sometimes|integer|nullable',
             'write' => 'sometimes|string',
             'post_state' => 'sometimes|string',
-            'tag_list' => 'required|string',
+            'tag_list' => 'required|string|nullable',
         ];
     }
 }

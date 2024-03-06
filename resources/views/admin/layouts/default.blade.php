@@ -8,12 +8,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-w-[1180px]">
-@include('common.toast-popup')
-@include('common.header')
+@include('admin.common.toast-popup')
+@include('admin.common.header')
 <section class="main-container">
     <h2 class="sr-only">본문</h2>
     <div class="flex h-auto min-h-full">
-        @include('common.left-menu', ['path' => explode('/', request()->path())[0] ?: 'information'])
+        @include('admin.common.left-menu', ['path' => explode('/', request()->path())[0] ?: 'information'])
         <div class="right-wrap py-5 pl-7">
             @yield('right-content')
         </div>

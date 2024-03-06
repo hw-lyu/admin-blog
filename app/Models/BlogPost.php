@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class BlogPost extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'blog_post';
 
@@ -18,6 +19,7 @@ class BlogPost extends Model
         'menu_id',
         'write',
         'is_blind',
+        'view_count',
         'tag_list',
         'thumbnail_id'
     ];
@@ -27,7 +29,8 @@ class BlogPost extends Model
      *
      * @return HasOne
      */
-    public function menu() : HasOne {
+    public function menu(): HasOne
+    {
         return $this->hasOne(BlogMenu::class, 'id', 'menu_id');
     }
 
@@ -36,7 +39,8 @@ class BlogPost extends Model
      *
      * @return HasOne
      */
-    public function thumbnail() : HasOne {
+    public function thumbnail(): HasOne
+    {
         return $this->hasOne(BlogFile::class, 'id', 'thumbnail_id');
     }
 }

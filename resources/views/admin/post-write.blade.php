@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 @section('title', '글쓰기')
 @section('right-content')
     <form action="{{ route('post.store') }}" method="post" name="write_form">

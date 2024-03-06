@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class LoginController extends Controller
 {
@@ -21,7 +21,7 @@ class LoginController extends Controller
      */
     public function index(): Application|Factory|View|FoundationApplication
     {
-        return view('login');
+        return view('Admin.login');
     }
 
     /**
@@ -39,7 +39,7 @@ class LoginController extends Controller
 
         // 로그인 여부
         if (Auth::attempt($credentials)) {
-            $response = Gate::inspect('is-admin', $request->user());
+            $response = Gate::inspect('is-Admin', $request->user());
 
             // 관리자 여부
             if ($response->allowed()) {

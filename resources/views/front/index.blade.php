@@ -1,0 +1,110 @@
+@extends('front.layouts.default')
+@section('title', '메인')
+@section('content')
+    <div class="inner flex flex-col">
+        <h2 class="pt-5 pb-2">많이 본 게시글</h2>
+        <div class="overflow-y-hidden overflow-y-auto">
+            <ul class="recent-posts-list min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}">
+                @foreach($recentPostsList as $recentPostList)
+                    <li class="item {{ $loop->first ? 'active' : '' }}"
+                        style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
+                        <a href="{{ route('front.show', ['id' => $recentPostList['id']]) }}">
+                            <div>조회수 테스트 : {{ $recentPostList['view_count'] ?? '-' }}</div>
+                            <div class="menu">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
+                            <div class="txt-box">
+                                <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
+                                <p class="md:line-clamp-3 line-clamp-2 mt-1">{{ strip_tags($recentPostList['content']) }}</p>
+                            </div>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    <div class="inner flex flex-col">
+        <h2 class="pt-10 pb-2">최근 글 리스트</h2>
+        <input type="hidden" id="nextPageUrl" value="{{ $postList->nextPageUrl() }}">
+        <ul class="post-list flex flex-col"></ul>
+    </div>
+
+    <script>
+        let recentPostsList = document.querySelector('.recent-posts-list');
+
+        recentPostsList.addEventListener('mouseover', function (e) {
+            let eTarget = e.target;
+
+            if (eTarget.tagName === 'A') {
+                [...recentPostsList.querySelectorAll('li')].map(ele => {
+                    if (ele.classList.contains('active')) {
+                        ele.classList.remove('active');
+                    } else {
+                        ele.parentElement.classList.add('active');
+                    }
+                });
+
+                eTarget.parentElement.classList.add('active');
+            }
+        });
+
+        // 무한 스크롤
+        const postList = document.querySelector('.post-list');
+
+        const items = async function (nextCursor = '') {
+            fetch(`{{ route('api.v1.page.index') }}?cursor=${nextCursor}`, {
+                method: 'get'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (response) {
+                let list = response.postList;
+
+                list.data.map(ele => {
+                    let item = document.createElement('li');
+                    item.className = 'item';
+
+                    item.innerHTML = `
+                            <a href="view/${ele['id']}">
+                                <div class="img">
+                                     ${ele['thumbnail'] ? "<img src='//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}'>" : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
+                                </div>
+                                <div class="txt-box">
+                                    <div>id : ${ele['id']}, 조회수 테스트 ${ele['view_count'] ?? '-'}</div>
+                                    <div class="menu">${ele['menu']['name'] ?? '-'}</div>
+                                    <div class="group">
+                                        <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
+                                        <p class="info md:line-clamp-5 line-clamp-3">${ele['content']}</p>
+                                    </div>
+                                    <p class="date">${ele['created_at']}</p>
+                                </div>
+                            </a>
+                        `;
+
+                    postList.appendChild(item);
+                });
+
+                return list;
+            }).then(function (response) {
+                const postListItem = document.querySelector('.post-list li:last-of-type');
+
+                if (postListItem) {
+                    const io = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                            // 주시 대상이 뷰포트 안으로 들어오면
+                            if (entry.intersectionRatio > 0) {
+                                if(response.next_cursor?.length) {
+                                    items(response.next_cursor);
+                                } else {
+                                    alert('마지막 리스트였습니다 :)');
+                                }
+                            }
+                        });
+                    });
+
+                    io.observe(postListItem);
+                }
+            });
+        };
+
+        items();
+
+    </script>
+@endsection

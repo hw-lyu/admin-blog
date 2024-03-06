@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('admin.layouts.default')
 @section('title', '글 리스트')
 @section('right-content')
     <form action="{{ route('post.create') }}" method="get">

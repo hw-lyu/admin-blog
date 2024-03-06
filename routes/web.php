@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\BlogPostController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BlogInformationController;
+use App\Http\Controllers\Admin\BlogMenuController;
+use App\Http\Controllers\Admin\BlogPostController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Front\FrontController;
 
-use App\Http\Controllers\BlogInformationController;
-use App\Http\Controllers\BlogMenuController;
-use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +19,29 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', [BlogInformationController::class, 'index']);
+Route::domain('admin.localhost')
+    ->group(function () {
 
-    Route::resource('/information', BlogInformationController::class);
-    Route::resource('/menu', BlogMenuController::class);
-    Route::resource('/post', BlogPostController::class);
-});
+        // 포스트 관리
+        Route::middleware(['auth'])->group(function () {
+            Route::get('/', [BlogInformationController::class, 'index']);
 
-// 로그인
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+            Route::resource('/information', BlogInformationController::class);
+            Route::resource('/menu', BlogMenuController::class);
+            Route::resource('/post', BlogPostController::class);
+        });
+
+        // 로그인
+        Route::get('/login', [LoginController::class, 'index'])->name('login');
+        Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+    });
+
+// 사용자 화면
+Route::domain('localhost')
+    ->group(function () {
+        Route::group(['as' => 'front.'], function () {
+            Route::get('/', [FrontController::class, 'index'])->name('index');
+            Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');
+            Route::get('/view/{id}', [FrontController::class, 'show'])->name('show');
+        });
+    });
