@@ -50,7 +50,7 @@
         const postList = document.querySelector('.post-list');
 
         const items = async function (nextCursor = '') {
-            fetch(`{{ route('api.v1.page.index') }}?cursor=${nextCursor}`, {
+            fetch(`/api/v1${location.pathname}?cursor=${nextCursor}`, {
                 method: 'get'
             }).then(function (response) {
                 return response.json();
