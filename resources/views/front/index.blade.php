@@ -67,7 +67,7 @@
                     item.innerHTML = `
                             <a href="view/${ele['id']}">
                                 <div class="img">
-                                     ${ele['thumbnail'] ? "<img src='//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}'>" : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
+                                     ${ele['thumbnail'] ? `<img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}">` : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
                                 </div>
                                 <div class="txt-box">
                                     <div>menu_is_blind: ${ele['menu']['is_blind']}, is_blind: ${ele['is_blind']}, id : ${ele['id']}, 조회수 테스트 ${ele['view_count'] ?? '-'}</div>
