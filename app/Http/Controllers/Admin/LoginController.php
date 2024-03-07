@@ -21,7 +21,7 @@ class LoginController extends Controller
      */
     public function index(): Application|Factory|View|FoundationApplication
     {
-        return view('Admin.login');
+        return view('admin.login');
     }
 
     /**
