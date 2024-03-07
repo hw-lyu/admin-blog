@@ -33,9 +33,11 @@ class BlogInformationController extends Controller
             'nick_name' => '',
             'introduce' => '',
             'coverFile' => [
+                'id' => '',
                 'file_path' => ''
             ],
             'profileFile' => [
+                'id' => '',
                 'file_path' => ''
             ]
         ];

@@ -19,9 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.localhost')
+Route::domain(config('app.admin_domain'))
     ->group(function () {
-
         // 포스트 관리
         Route::middleware(['auth'])->group(function () {
             Route::get('/', [BlogInformationController::class, 'index']);
@@ -37,7 +36,7 @@ Route::domain('admin.localhost')
     });
 
 // 사용자 화면
-Route::domain('localhost')
+Route::domain(config('app.user_domain'))
     ->group(function () {
         Route::group(['as' => 'front.'], function () {
             Route::get('/', [FrontController::class, 'index'])->name('index');
