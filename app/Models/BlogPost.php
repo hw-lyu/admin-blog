@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +24,14 @@ class BlogPost extends Model
         'tag_list',
         'thumbnail_id'
     ];
+
+    /**
+     * array / JSON 직렬화 날짜를 해당 포맷으로 준비
+     */
+    protected function serializeDate(DateTimeInterface $date) : string
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * 글의 메뉴아이디 - 메뉴의 아이디 매칭 (1:1)

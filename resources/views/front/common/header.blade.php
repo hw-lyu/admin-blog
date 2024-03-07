@@ -2,8 +2,8 @@
     <div class="inner flex md:flex-row flex-col justify-between">
         <h1 class="text-4xl font-bold text-purple-700">
             <a href="/" class="flex flex-col">
-                {{ $blogInfo['nick_name'] }}
-                <span class="text-sm">{{ $blogInfo['name'] }}</span>
+                {{ $blogInfo['name'] }}
+                <span class="text-sm">{{ $blogInfo['nick_name'] }}</span>
             </a>
         </h1>
         <nav class="flex items-center md:mt-0 mt-3">

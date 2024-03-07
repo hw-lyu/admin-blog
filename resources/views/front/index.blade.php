@@ -9,7 +9,6 @@
                     <li class="item {{ $loop->first ? 'active' : '' }}"
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
                         <a href="{{ route('front.show', ['id' => $recentPostList['id']]) }}">
-                            <div>조회수 테스트 : {{ $recentPostList['view_count'] ?? '-' }}</div>
                             <div class="menu">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
                             <div class="txt-box">
                                 <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
@@ -65,18 +64,17 @@
 
                     item.className = 'item';
                     item.innerHTML = `
-                            <a href="view/${ele['id']}">
+                            <a href="/view/${ele['id']}">
                                 <div class="img">
                                      ${ele['thumbnail'] ? `<img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}">` : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
                                 </div>
                                 <div class="txt-box">
-                                    <div>menu_is_blind: ${ele['menu']['is_blind']}, is_blind: ${ele['is_blind']}, id : ${ele['id']}, 조회수 테스트 ${ele['view_count'] ?? '-'}</div>
                                     <div class="menu">${ele['menu']['name'] ?? '-'}</div>
                                     <div class="group">
                                         <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
                                         <p class="info md:line-clamp-5 line-clamp-3">${divHidden.innerText}</p>
                                     </div>
-                                    <p class="date">${new Date(ele['created_at']).toLocaleString('ko-KR')}</p>
+                                    <p class="date">${ele['created_at']}</p>
                                 </div>
                             </a>
                         `;
@@ -96,7 +94,7 @@
                                 if (response.next_cursor?.length) {
                                     items(response.next_cursor);
                                 } else {
-                                    alert('마지막 리스트였습니다 :)');
+                                    console.log('마지막글 완료 :)');
                                 }
                             }
                         });
