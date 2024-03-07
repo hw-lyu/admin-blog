@@ -41,7 +41,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-        return view('Admin.post-list', ['post' => $post]);
+        return view('admin.post-list', ['post' => $post]);
     }
 
     /**
@@ -66,7 +66,7 @@ class BlogPostController extends Controller
             'thumbnail_id' => ''
         ];
 
-        return view('Admin.post-view', ['post' => $post]);
+        return view('admin.post-view', ['post' => $post]);
     }
 
     /**
@@ -92,7 +92,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-        return view('Admin.post-write', ['menus' => $menus]);
+        return view('admin.post-write', ['menus' => $menus]);
     }
 
     /**
@@ -196,7 +196,7 @@ class BlogPostController extends Controller
             ]
         ];
 
-        return view('Admin.post-edit', ['post' => $post, 'menus' => $menus]);
+        return view('admin.post-edit', ['post' => $post, 'menus' => $menus]);
     }
 
     /**

@@ -42,7 +42,7 @@ class BlogInformationController extends Controller
             ]
         ];
 
-        return view('Admin.index', ['data' => $data]);
+        return view('admin.index', ['data' => $data]);
     }
 
     /**
