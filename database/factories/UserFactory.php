@@ -24,11 +24,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => '유혜원',
-            'email' => 'yhw324@naver.com',
+            'name' => '루미',
+            'email' => 't',
             'email_verified_at' => now(),
             'roles' => 1,
-            'password' => static::$password ??= Hash::make('gpdnjsdl93'),
+            'password' => static::$password ??= bcrypt('t'),
             'remember_token' => Str::random(10),
         ];
     }
