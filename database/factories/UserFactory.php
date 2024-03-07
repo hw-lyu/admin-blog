@@ -25,10 +25,10 @@ class UserFactory extends Factory
     {
         return [
             'name' => '유혜원',
-            'email' => 't',
+            'email' => 'yhw324@naver.com',
             'email_verified_at' => now(),
             'roles' => 1,
-            'password' => static::$password ??= Hash::make('t'),
+            'password' => static::$password ??= Hash::make('gpdnjsdl93'),
             'remember_token' => Str::random(10),
         ];
     }
