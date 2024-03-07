@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'email' => 't',
             'email_verified_at' => now(),
             'roles' => 1,
-            'password' => static::$password ??= bcrypt('t'),
+            'password' => static::$password ??= Hash::make('t'),
             'remember_token' => Str::random(10),
         ];
     }
