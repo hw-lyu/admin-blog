@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         /**
          * 관리자 여부 판단
          */
-        Gate::define('is-Admin', function (User $user) {
+        Gate::define('is-admin', function (User $user) {
             return $user->roles === 1
                 ? Response::allow()
                 : Response::denyAsNotFound('로그인할 수 없습니다.');

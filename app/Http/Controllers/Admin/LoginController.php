@@ -39,7 +39,7 @@ class LoginController extends Controller
 
         // 로그인 여부
         if (Auth::attempt($credentials)) {
-            $response = Gate::inspect('is-Admin', $request->user());
+            $response = Gate::inspect('is-admin', $request->user());
 
             // 관리자 여부
             if ($response->allowed()) {
