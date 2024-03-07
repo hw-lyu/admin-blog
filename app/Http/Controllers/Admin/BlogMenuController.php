@@ -38,7 +38,7 @@ class BlogMenuController extends Controller
             'sort' => '',
         ];
 
-        return view('Admin.menu', ['data' => $data]);
+        return view('admin.menu', ['data' => $data]);
     }
 
     /**
