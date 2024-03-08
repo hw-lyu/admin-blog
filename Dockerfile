@@ -24,4 +24,4 @@ RUN chmod 775 -R /home/admin-blog/bootstrap/cache
 RUN chmod 775 -R /home/admin-blog/storage
 
 EXPOSE 9000
-CMD ["php-fpm", "tail", "-f", "/dev/null"]
+CMD ["php-fpm"]
