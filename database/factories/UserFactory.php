@@ -24,7 +24,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+<<<<<<< HEAD
             'name' => '루미',
+=======
+            'name' => '어드민',
+>>>>>>> 912bca40cf907be9ab0bb862152f6ae12d081072
             'email' => 't',
             'email_verified_at' => now(),
             'roles' => 1,
