@@ -2,7 +2,7 @@
 @section('title', '메인')
 @section('content')
     <div class="inner flex flex-col">
-        <h2 class="pt-5 pb-2">많이 본 게시글</h2>
+        <h2 class="pt-5 pb-2">💡 많이 본 게시글 💡</h2>
         <div class="overflow-y-hidden overflow-y-auto">
             <ul class="recent-posts-list min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}">
                 @foreach($recentPostsList as $recentPostList)
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="inner flex flex-col">
-        <h2 class="pt-10 pb-2">최근 글 리스트</h2>
+        <h2 class="pt-10 pb-2">🏷 최근 글 리스트 🏷️</h2>
         <ul class="post-list flex flex-col"></ul>
     </div>
 
