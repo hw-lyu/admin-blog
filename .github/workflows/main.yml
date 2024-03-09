@@ -30,8 +30,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      TEST: ${{ secrets.LIGHTSAIL_HOST }}
     steps:
       - uses: actions/checkout@v4
+      - env: 
+            TEST: ${{ secrets.LIGHTSAIL_HOST }}
       - run: echo $TEST
