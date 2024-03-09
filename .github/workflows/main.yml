@@ -1,26 +1,4 @@
-# name: remote ssh command
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: executing remote ssh commands using ssh key
-#       uses: appleboy/ssh-action@v1.0.3
-#       with:
-#         host: ${{ secrets.LIGHTSAIL_HOST }}
-#         username: ${{ secrets.LIGHTSAIL_USERNAME }}
-#         key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
-#         port: ${{ secrets.LIGHTSAIL_PORT }}
-#         script: whoami
-      
-
-name: test
+name: My Workflow test
 
 on:
   push:
@@ -28,16 +6,11 @@ on:
       - main
 
 jobs:
-  build:
+  example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: ssh-action
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.admin-blog.LIGHTSAIL_HOST }}
-          username: ${{ secrets.admin-blog.LIGHTSAIL_USERNAME }}
-          key: ${{ secrets.admin-blog.LIGHTSAIL_PRIVATE_KEY }}
-          port: ${{ secrets.admin-blog.LIGHTSAIL_PORT }}
-          script: |
-            whoami
-            git pull origin maste
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Use Secret in Workflow
+      run: echo "My secret value is ${{ secrets.TEST }}"
