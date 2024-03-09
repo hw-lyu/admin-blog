@@ -1,5 +1,5 @@
 @extends('front.layouts.default')
-@section('title', '디테일')
+@section('title', '글 보기')
 @section('content')
     <div class="title-image-box"
          style="{!! !empty($view['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$view['thumbnail']['file_path']}')" : '' !!}">
