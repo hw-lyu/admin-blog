@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.LIGHTSAIL_HOST }}
         username: ${{ secrets.LIGHTSAIL_USERNAME }}
@@ -17,7 +17,5 @@ jobs:
         port: ${{ secrets.LIGHTSAIL_PORT }}
         script: |
           whoami
-          cd /home/admin-blog
-          git fetch origin
-          git merge origin/main
+          ls -al
           
