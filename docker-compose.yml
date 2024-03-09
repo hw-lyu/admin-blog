@@ -28,8 +28,8 @@ services:
       - ./:/home/admin-blog
       - ./public:/home/admin-blog/public
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./var/log/nginx:/var/log/nginx
-      - ./etc/letsencrypt:/etc/letsencrypt
+      - /var/log/nginx:/var/log/nginx
+      - /etc/letsencrypt:/etc/letsencrypt
 
   mysql:
     image: mysql:8.0
