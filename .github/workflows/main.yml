@@ -16,6 +16,7 @@ jobs:
         key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
         port: ${{ secrets.LIGHTSAIL_PORT }}
         script: |
-          git config --global --add safe.directory /home/admin-blog
+          whoami
+          # git config --global --add safe.directory /home/admin-blog
           cd /home/admin-blog
           git pull origin main 
