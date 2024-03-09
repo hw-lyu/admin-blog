@@ -1,16 +1,21 @@
-name: My Workflow test
-
+name: ssh git fetch  
 on:
-  push:
+  push: 
     branches:
       - main
-
 jobs:
-  example-job:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Use Secret in Workflow
-      run: echo "My secret value is ${{ secrets.TEST }}"
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.LIGHTSAIL_HOST }}
+        username: ${{ secrets.LIGHTSAIL_USERNAME }}
+        password: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+        port: ${{ secrets.LIGHTSAIL_PORT }}
+        script: |
+          cd /home/admin-blog
+          git fetch origin
+          git merge origin/main
