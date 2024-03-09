@@ -13,9 +13,7 @@ jobs:
       with:
         host: ${{ secrets.LIGHTSAIL_HOST }}
         username: ${{ secrets.LIGHTSAIL_USERNAME }}
-        password: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+        key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
         port: ${{ secrets.LIGHTSAIL_PORT }}
-        script: |
-          whoami
-          ls -al
-          
+        script: whoami
+              
