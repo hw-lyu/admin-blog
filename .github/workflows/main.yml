@@ -1,11 +1,21 @@
-name: ssh git fetch  
-on: workflow_dispatch
+name: remote ssh command
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name : test 
-      run : | 
-      echo ${{ secrets.HOST }}"
-              
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.LIGHTSAIL_HOST }}
+        username: ${{ secrets.LIGHTSAIL_USERNAME }}
+        key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+        port: ${{ secrets.LIGHTSAIL_PORT }}
+        script: whoami
+      
