@@ -31,7 +31,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - env: 
-            TEST: ${{ secrets.LIGHTSAIL_HOST }}
-      - run: echo $TEST
+      - name: ssh-action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USERNAME }}
+          key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+          port: ${{ secrets.LIGHTSAIL_PORT }}
+          script: |
+            whoami
+            git pull origin maste
