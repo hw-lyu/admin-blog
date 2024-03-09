@@ -28,7 +28,6 @@ services:
       - ./:/home/admin-blog
       - ./public:/home/admin-blog/public
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./:/etc/letsencrypt/live/lumii.world
 
   mysql:
     image: mysql:8.0
