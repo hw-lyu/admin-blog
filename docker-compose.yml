@@ -28,8 +28,7 @@ services:
       - ./:/home/admin-blog
       - ./public:/home/admin-blog/public
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./privkey.pem:/etc/letsencrypt/live/lumii.world/fullchain.pem
-      - ./fullchain.pem:/etc/letsencrypt/live/lumii.world/privkey.pem
+      - ./:/etc/letsencrypt/live/lumii.world
 
   mysql:
     image: mysql:8.0
