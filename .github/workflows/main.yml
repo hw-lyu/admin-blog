@@ -29,11 +29,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
-      LIGHTSAIL_HOST: ${{ secrets.admin-blog.LIGHTSAIL_HOST }}
-
+      TEST: ${{ secrets.LIGHTSAIL_HOST }}
     steps:
-    - uses: actions/checkout@v2
-    - run: echo $LIGHTSAIL_HOST
+      - uses: actions/checkout@v4
+      - run: echo $TEST
