@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.0.3
+      uses: appleboy/ssh-action@master
       with:
+        key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
         host: ${{ secrets.LIGHTSAIL_HOST }}
         username: ${{ secrets.LIGHTSAIL_USERNAME }}
-        key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
         port: ${{ secrets.LIGHTSAIL_PORT }}
         script: whoami
               
