@@ -19,4 +19,4 @@ jobs:
           whoami
           # git config --global --add safe.directory /home/admin-blog
           cd /home/admin-blog
-          git pull origin main 
+          sudo git pull origin main 
