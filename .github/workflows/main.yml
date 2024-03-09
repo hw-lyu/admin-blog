@@ -34,10 +34,10 @@ jobs:
       - name: ssh-action
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.LIGHTSAIL_HOST }}
-          username: ${{ secrets.LIGHTSAIL_USERNAME }}
-          key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
-          port: ${{ secrets.LIGHTSAIL_PORT }}
+          host: ${{ admin-blog.LIGHTSAIL_HOST }}
+          username: ${{ admin-blog.LIGHTSAIL_USERNAME }}
+          key: ${{ admin-blog.LIGHTSAIL_PRIVATE_KEY }}
+          port: ${{ admin-blog.LIGHTSAIL_PORT }}
           script: |
             whoami
             git pull origin maste
