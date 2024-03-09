@@ -16,6 +16,7 @@ jobs:
         password: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
         port: ${{ secrets.LIGHTSAIL_PORT }}
         script: |
+          whoami
           cd /home/admin-blog
           git fetch origin
           git merge origin/main
