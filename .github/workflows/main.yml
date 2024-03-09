@@ -1,4 +1,4 @@
-name: ssh git fetch  
+name: ssh git pull 
 on:
   push: 
     branches:
@@ -18,5 +18,4 @@ jobs:
         script: |
           git config --global --add safe.directory /home/admin-blog
           cd /home/admin-blog
-          git fetch origin
-          git merge origin/main
+          git pull origin main 
