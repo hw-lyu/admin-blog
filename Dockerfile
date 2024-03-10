@@ -23,5 +23,5 @@ RUN chown -R $USER:www-data /home/admin-blog/bootstrap/cache
 RUN chmod 775 -R /home/admin-blog/bootstrap/cache
 RUN chmod 775 -R /home/admin-blog/storage
 
-EXPOSE 9000
+EXPOSE 9000 80 443
 CMD ["php-fpm"]
