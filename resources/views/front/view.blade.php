@@ -1,5 +1,8 @@
 @extends('front.layouts.default')
-@section('title', '디테일')
+@section('og:title', trim(mb_substr(strip_tags($view['name']), 0, 30, 'utf-8')). '...')
+@section('og:description', trim(mb_substr(strip_tags($view['content']), 0, 30, 'utf-8')). '...')
+@section('og:url', Request()->url())
+@section('title', trim(mb_substr(strip_tags($view['name']), 0, 30, 'utf-8')). '...')
 @section('content')
     <div class="title-image-box"
          style="{!! !empty($view['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$view['thumbnail']['file_path']}')" : '' !!}">
