@@ -114,7 +114,7 @@ body {
     @apply pt-36 pb-5;
     background: #fff center center no-repeat;
     background-size: cover;
-    text-shadow: 3px -1px 7px rgba(0, 0, 0, .6);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
 
 .svg-icon {
