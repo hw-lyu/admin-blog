@@ -37,7 +37,12 @@ class FrontController extends Controller
     {
         $view = $this->blogPost
             ->with(['menu', 'thumbnail'])
-            ->where('is_blind', 1)
+            ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
+            ->where([
+                'blog_post.is_blind' => '1',
+                'blog_menus.is_blind' => '1'
+            ])
+            ->whereNull('blog_menus.deleted_at')
             ->findOrFail($id);
 
         $view->increment('view_count');
@@ -74,6 +79,7 @@ class FrontController extends Controller
                 'blog_post.is_blind' => 1,
                 'blog_menus.is_blind' => 1
             ])
+            ->whereNull('blog_menus.deleted_at')
             ->selectRaw('blog_post.id, blog_post.name, blog_post.content, blog_post.tag_list, blog_post.view_count, blog_post.is_blind, blog_post.menu_id, blog_post.thumbnail_id, blog_post.created_at')
             ->orderBy('blog_post.view_count', 'desc')
             ->limit(5)

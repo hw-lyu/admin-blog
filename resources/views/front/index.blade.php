@@ -5,6 +5,9 @@
         <h2 class="pt-5 pb-2">💡 많이 본 게시글 💡</h2>
         <div class="overflow-y-hidden overflow-y-auto">
             <ul class="recent-posts-list min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}">
+                @if(empty($recentPostsList))
+                    <li class='mt-1'>리스트 데이터가 없습니다 :)</li>
+                @endif
                 @foreach($recentPostsList as $recentPostList)
                     <li class="item {{ $loop->first ? 'active' : '' }}"
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
@@ -28,7 +31,7 @@
     <script>
         let recentPostsList = document.querySelector('.recent-posts-list');
 
-        recentPostsList.addEventListener('mouseover', function (e) {
+        function recentPostEvent(e) {
             let eTarget = e.target;
 
             if (eTarget.tagName === 'A') {
@@ -42,7 +45,9 @@
 
                 eTarget.parentElement.classList.add('active');
             }
-        });
+        }
+
+        recentPostsList.addEventListener('mouseover', recentPostEvent);
 
         // 리스트 - 무한 스크롤
         const postList = document.querySelector('.post-list');
@@ -54,7 +59,11 @@
             }).then(function (response) {
                 return response.json();
             }).then(function (response) {
-                let list = response.postList;
+                let list = response?.postList;
+
+                if(!list.data.length) {
+                    return postList.innerHTML = "<li class='mt-1'>리스트 데이터가 없습니다 :)</li>"
+                }
 
                 list.data.map(ele => {
                     let item = document.createElement('li'),
