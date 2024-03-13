@@ -34,7 +34,6 @@
         function recentPostEvent(e) {
             let eTarget = e.target;
 
-            console.log(eTarget);
             if (eTarget.tagName === 'A') {
                 [...recentPostsList.querySelectorAll('li')].map(ele => {
                     if (ele.classList.contains('active')) {
