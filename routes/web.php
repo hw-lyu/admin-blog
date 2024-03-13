@@ -41,6 +41,6 @@ Route::domain(config('app.user_domain'))
         Route::group(['as' => 'front.'], function () {
             Route::get('/', [FrontController::class, 'index'])->name('index');
             Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');
-            Route::get('/view/{id}', [FrontController::class, 'show'])->name('show');
+            Route::get('/view/{menuEng}/{id}', [FrontController::class, 'show'])->name('show');
         });
     });

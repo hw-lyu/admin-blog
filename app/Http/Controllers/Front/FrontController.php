@@ -33,14 +33,26 @@ class FrontController extends Controller
      * @param string $id
      * @return Application|Factory|View|FoundationApplication
      */
-    public function show(string $id): Application|Factory|View|FoundationApplication
+    public function show(string $menuEng, string $id): Application|Factory|View|FoundationApplication
     {
+        if (!empty($menuEng)) {
+            $menu = BlogMenu::where([
+                'name_eng' => $menuEng,
+                'is_blind' => 1
+            ]);
+
+            if (!$menu->exists()) {
+                abort(404);
+            }
+        }
+
         $view = $this->blogPost
             ->with(['menu', 'thumbnail'])
             ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
             ->where([
                 'blog_post.is_blind' => '1',
-                'blog_menus.is_blind' => '1'
+                'blog_menus.is_blind' => '1',
+                'blog_post.menu_id' => $menu->first()['id']
             ])
             ->whereNull('blog_menus.deleted_at')
             ->findOrFail($id);

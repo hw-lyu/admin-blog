@@ -11,7 +11,7 @@
                 @foreach($recentPostsList as $recentPostList)
                     <li class="item {{ $loop->first ? 'active' : '' }}"
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
-                        <a href="{{ route('front.show', ['id' => $recentPostList['id']]) }}">
+                        <a href="{{ route('front.show', ['menuEng' => $recentPostList['menu']['name_eng'], 'id' => $recentPostList['id']]) }}">
                             <div class="menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
                             <div class="txt-box pointer-events-none">
                                 <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
@@ -74,7 +74,7 @@
 
                     item.className = 'item';
                     item.innerHTML = `
-                            <a href="/view/${ele['id']}">
+                            <a href="/view/${ele['menu']['name_eng']}/${ele['id']}">
                                 <div class="img">
                                      ${ele['thumbnail'] ? `<img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}">` : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
                                 </div>
