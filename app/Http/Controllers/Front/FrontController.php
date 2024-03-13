@@ -54,6 +54,7 @@ class FrontController extends Controller
                 'blog_menus.is_blind' => '1',
                 'blog_post.menu_id' => $menu->first()['id']
             ])
+            ->selectRaw('blog_post.*')
             ->whereNull('blog_menus.deleted_at')
             ->findOrFail($id);
 
