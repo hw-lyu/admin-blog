@@ -12,8 +12,8 @@
                     <li class="item {{ $loop->first ? 'active' : '' }}"
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
                         <a href="{{ route('front.show', ['id' => $recentPostList['id']]) }}">
-                            <div class="menu">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
-                            <div class="txt-box">
+                            <div class="menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
+                            <div class="txt-box pointer-events-none">
                                 <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
                                 <p class="md:line-clamp-3 line-clamp-2 mt-1">{{ strip_tags($recentPostList['content']) }}</p>
                             </div>
@@ -34,6 +34,7 @@
         function recentPostEvent(e) {
             let eTarget = e.target;
 
+            console.log(eTarget);
             if (eTarget.tagName === 'A') {
                 [...recentPostsList.querySelectorAll('li')].map(ele => {
                     if (ele.classList.contains('active')) {
@@ -48,6 +49,7 @@
         }
 
         recentPostsList.addEventListener('mouseover', recentPostEvent);
+        recentPostsList.addEventListener('touchend', recentPostEvent);
 
         // 리스트 - 무한 스크롤
         const postList = document.querySelector('.post-list');
