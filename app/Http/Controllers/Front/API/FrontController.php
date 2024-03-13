@@ -44,9 +44,8 @@ class FrontController extends Controller
             ])
             ->whereNull('blog_menus.deleted_at')
             ->selectRaw('blog_post.id, blog_post.name, blog_post.content, blog_post.tag_list, blog_post.view_count, blog_post.is_blind, blog_post.menu_id, blog_post.thumbnail_id, blog_post.created_at')
-            ->orderBy('blog_post.id', 'desc')
-            ->cursorPaginate(3);
+            ->orderBy('blog_post.id', 'desc');
 
-        return response()->json(['postList' => $postList]);
+        return response()->json(['total' => $postList->count(), 'postList' => $postList->cursorPaginate(3)]);
     }
 }

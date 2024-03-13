@@ -91,8 +91,9 @@
                     postList.appendChild(item);
                 });
 
-                return list;
+                return response;
             }).then(function (response) {
+                const postList = response.postList;
                 const postListItem = document.querySelector('.post-list li:last-of-type');
 
                 if (postListItem) {
@@ -100,8 +101,8 @@
                         entries.forEach((entry) => {
                             // 주시 대상이 뷰포트 안으로 들어오면
                             if (entry.intersectionRatio > 0) {
-                                if (response.next_cursor?.length) {
-                                    items(response.next_cursor);
+                                if (postList.next_cursor?.length && (response.total !== [...document.querySelectorAll('.post-list li')].length)) {
+                                    items(postList.next_cursor);
                                 } else {
                                     console.log('마지막글 완료 :)');
                                 }
