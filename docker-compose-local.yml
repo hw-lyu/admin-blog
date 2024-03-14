@@ -1,0 +1,65 @@
+version: "3"
+services:
+
+  php:
+    image: php:8.3-fpm
+    container_name: php
+    networks:
+      web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./:/home/admin-blog
+      - ./public:/home/admin-blog/public
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    networks:
+      web:
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/home/admin-blog
+      - ./public:/home/admin-blog/public
+      - ./nginx-local.conf:/etc/nginx/nginx.conf
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    env_file: .env
+    networks:
+      web:
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --character-set-client-handshake=FALSE
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      web:
+    command: redis-server --port 13000
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "13000:13000"
+
+networks:
+  web:
