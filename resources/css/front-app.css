@@ -24,22 +24,17 @@ body {
 }
 
 .recent-posts-list {
-    @apply flex gap-2.5 flex-nowrap justify-between;
-}
-
-.recent-posts-list.none-list::after {
-    content: '';
-    display: flex;
-    flex: 1 0 auto;
+    @apply flex gap-2.5 flex-nowrap;
 }
 
 .recent-posts-list .item {
     @apply rounded-2xl;
-    width: calc((100% - 18.5rem) / 4);
+    min-width: 166px;
     background: #fff center center no-repeat;
     background-size: cover;
     position: relative;
     transition: all 0.2s;
+    flex: 0 0 166px;
 }
 
 .recent-posts-list .item::before {
@@ -56,12 +51,13 @@ body {
 }
 
 .recent-posts-list .item:hover {
-    width: 16rem;
+    flex-basis: 256px;
     transition: all 0.2s;
 }
 
 .recent-posts-list .item.active {
-    width: 16rem;
+    flex-basis: 256px;
+    background: red;
 }
 
 .recent-posts-list .item a {

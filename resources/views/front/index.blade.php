@@ -4,7 +4,8 @@
     <div class="inner flex flex-col">
         <h2 class="pt-5 pb-2">💡 많이 본 게시글 💡</h2>
         <div class="overflow-y-hidden overflow-y-auto">
-            <ul class="recent-posts-list min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}">
+{{--            min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}--}}
+            <ul class="recent-posts-list">
                 @if(empty($recentPostsList))
                     <li class='mt-1'>리스트 데이터가 없습니다 :)</li>
                 @endif
@@ -38,12 +39,9 @@
                 [...recentPostsList.querySelectorAll('li')].map(ele => {
                     if (ele.classList.contains('active')) {
                         ele.classList.remove('active');
-                    } else {
-                        ele.parentElement.classList.add('active');
                     }
+                    eTarget.parentElement.classList.add('active');
                 });
-
-                eTarget.parentElement.classList.add('active');
             }
         }
 
