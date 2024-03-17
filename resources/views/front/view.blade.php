@@ -5,7 +5,7 @@
 @section('title', trim(mb_substr(strip_tags($view['name']), 0, 30, 'utf-8')). '...')
 @section('content')
     <div class="title-image-box"
-         style="{!! !empty($view['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$view['thumbnail']['file_path']."')" : config('app.no_thumb_url') !!}">
+         style="{!! !empty($view['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$view['thumbnail']['file_path']."')" :  "background-image: url('".config('app.no_thumb_url')."')" !!}">
         <div class="inner text-white">
             <div class="cate">{{ $view['menu']['name'] ?? '-' }}</div>
             <p class="text-center text-4xl mt-2 line-clamp-2">{{ $view['name'] }}</p>
