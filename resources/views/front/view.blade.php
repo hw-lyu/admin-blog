@@ -5,7 +5,7 @@
 @section('title', trim(mb_substr(strip_tags($view['name']), 0, 30, 'utf-8')). '...')
 @section('content')
     <div class="title-image-box"
-         style="{!! !empty($view['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$view['thumbnail']['file_path']}')" : '' !!}">
+         style="{!! !empty($view['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$view['thumbnail']['file_path']."')" : config('app.no_thumb_url') !!}">
         <div class="inner text-white">
             <div class="cate">{{ $view['menu']['name'] ?? '-' }}</div>
             <p class="text-center text-4xl mt-2 line-clamp-2">{{ $view['name'] }}</p>
@@ -14,5 +14,10 @@
     </div>
     <div class="inner my-5 py-5">
         {!! $view['content'] !!}
+        <ul class="tag-list">
+            @foreach(json_decode($view['tag_list']) as $tag)
+                <li><a href="/hash?hashtag={{ $tag }}">#{{ $tag }}</a></li>
+            @endforeach
+        </ul>
     </div>
 @endsection

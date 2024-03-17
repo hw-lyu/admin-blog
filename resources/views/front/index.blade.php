@@ -4,14 +4,13 @@
     <div class="inner flex flex-col">
         <h2 class="pt-5 pb-2">💡 많이 본 게시글 💡</h2>
         <div class="overflow-y-hidden overflow-y-auto">
-{{--            min-w-[720px] {{ count($recentPostsList) <= 4 ? 'none-list' : '' }}--}}
             <ul class="recent-posts-list">
                 @if(empty($recentPostsList))
                     <li class='mt-1'>리스트 데이터가 없습니다 :)</li>
                 @endif
                 @foreach($recentPostsList as $recentPostList)
                     <li class="item {{ $loop->first ? 'active' : '' }}"
-                        style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$recentPostList['thumbnail']['file_path']}')" : '' !!}">
+                        style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$recentPostList['thumbnail']['file_path']."')" : "background-image: url('".config('app.no_thumb_url')."')" !!}">
                         <a href="{{ route('front.show', ['menuEng' => $recentPostList['menu']['name_eng'], 'id' => $recentPostList['id']]) }}">
                             <div class="menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
                             <div class="txt-box pointer-events-none">
@@ -64,6 +63,8 @@
                     return postList.innerHTML = "<li class='mt-1'>리스트 데이터가 없습니다 :)</li>"
                 }
 
+                console.log(list);
+
                 list.data.map(ele => {
                     let item = document.createElement('li'),
                         divHidden = document.createElement('div');
@@ -74,7 +75,7 @@
                     item.innerHTML = `
                             <a href="/view/${ele['menu']['name_eng']}/${ele['id']}">
                                 <div class="img">
-                                     ${ele['thumbnail'] ? `<img src="//lumii-photo.s3.ap-northeast-2.amazonaws.com/${ele['thumbnail']['file_path']}">` : "<div class='svg-icon'><i class='fa-solid fa-circle-xmark'></i></div>"}
+                                     ${ele['thumbnail'] ? `<img src="{{config('app.s3_thumb_url')}}${ele['thumbnail']['file_path']}" alt="">` : `<img src="{{config('app.no_thumb_url')}}" alt="">`}
                                 </div>
                                 <div class="txt-box">
                                     <div class="menu">${ele['menu']['name'] ?? '-'}</div>

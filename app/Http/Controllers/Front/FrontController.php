@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
@@ -18,7 +19,7 @@ class FrontController extends Controller
     }
 
     /**
-     * 메인페이지
+     * 메인 리스트
      *
      * @return RedirectResponse
      */
@@ -28,8 +29,9 @@ class FrontController extends Controller
     }
 
     /**
-     * 디테일 페이지
+     * 보기 페이지
      *
+     * @param string $menuEng
      * @param string $id
      * @return Application|Factory|View|FoundationApplication
      */
@@ -100,5 +102,29 @@ class FrontController extends Controller
             ->toArray();
 
         return view('front.index', ['recentPostsList' => $recentPostsList]);
+    }
+
+    /**
+     * 해시태그 리스트 페이지
+     *
+     * @param Request $request
+     * @return Application|Factory|View|FoundationApplication
+     */
+    public function hashTag(Request $request): Application|Factory|View|FoundationApplication
+    {
+        $tagQuery = $request->query('hashtag');
+
+        $tagList = BlogPost::with(['menu', 'thumbnail'])
+            ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
+            ->where([
+                'blog_post.is_blind' => 1,
+                'blog_menus.is_blind' => 1
+            ])
+            ->whereNull('blog_menus.deleted_at')
+            ->whereJsonContains('tag_list', $tagQuery)
+            ->selectRaw('blog_post.*')
+            ->orderBy('id', 'desc');
+
+        return view('front.hashtag', ['tagName' => $tagQuery, 'tagCount' => $tagList->count(), 'tagList' => $tagList->get()->toArray()]);
     }
 }

@@ -115,3 +115,15 @@ body {
 .svg-icon {
     @apply absolute top-0 left-0 right-0 bottom-0 md:text-[60px] text-3xl text-gray-300 bg-white flex flex-wrap items-center justify-center;
 }
+
+.tag-list {
+    @apply flex flex-wrap mt-10;
+}
+
+.tag-list li {
+    @apply mr-1;
+}
+
+.tag-list li a {
+    @apply text-sm border border-purple-600 text-gray-400 px-3 py-1;
+}

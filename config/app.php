@@ -195,5 +195,8 @@ return [
     */
 
     'admin_domain' => env('ADMIN_DOMAIN'),
-    'user_domain' => env('USER_DOMAIN')
+    'user_domain' => env('USER_DOMAIN'),
+    's3_thumb_url' => env('S3_THUMB_URL'),
+    'no_thumb_url' => env('NO_THUMB_URL')
+
 ];
