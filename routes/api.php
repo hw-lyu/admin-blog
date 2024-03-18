@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function () {
     Route::post('file/upload', [BlogFileController::class, 'store'])
-        ->middleware('auth.basic.one')
+        ->middleware('auth.crypt.once')
         ->name('blog.file.store');
 
     Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');

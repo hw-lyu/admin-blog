@@ -63,8 +63,6 @@
                     return postList.innerHTML = "<li class='mt-1'>리스트 데이터가 없습니다 :)</li>"
                 }
 
-                console.log(list);
-
                 list.data.map(ele => {
                     let item = document.createElement('li'),
                         divHidden = document.createElement('div');

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
 
 class LoginController extends Controller
@@ -44,6 +45,9 @@ class LoginController extends Controller
             // 관리자 여부
             if ($response->allowed()) {
                 $request->session()->regenerate();
+
+                // api 접근시 아이디 비밀번호가 필요함. 그렇지만 라라벨 유저 테이블서 비밀번호 hash 되어있기 때문에 복호화여 한번 더 처리
+                session(['encrypt_password' => Crypt::encryptString($credentials['password'])]);
 
                 return redirect()->intended();
             } else {
