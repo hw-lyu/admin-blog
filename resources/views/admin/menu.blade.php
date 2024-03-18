@@ -3,6 +3,7 @@
 @section('right-content')
     <form action="{{ route('menu.store') }}" method="post" name="menu_form">
         @csrf
+        <p class="mb-3 text-sm font-bold">* 메뉴 삭제시 등록 버튼을 클릭해야 삭제가 됩니다.</p>
         <div class="flex">
             <nav class="basis-[250px]">
                 <div class="flex mb-3 text-sm">
