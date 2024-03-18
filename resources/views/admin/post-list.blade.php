@@ -27,18 +27,18 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($post as $val)
+        @foreach($post as $list)
             <tr>
-                <td class="text-center">{{ $val['id'] }}</td>
-                <td class="text-center">{{ !empty($val['menu']) ? $val['menu']['name'] : '-' }}
-                    ({{ !empty($val['menu']) ? $val['menu']['name_eng'] : '-' }})
+                <td class="text-center">{{ $list['id'] }}</td>
+                <td class="text-center">{!! !empty($list['menu']) ? (!$list['menu']['is_blind'] ? '<i class="fa-solid fa-lock"></i> ' : '').$list['menu']['name'] : '-'  !!}
+                    ({{ !empty($list['menu']) ? $list['menu']['name_eng'] : '-' }})
                 </td>
-                <td class="text-left"><a href="{{ route('post.show', ['post' => $val['id']]) }}">{{ $val['name'] }}</a>
+                <td class="text-left"><a href="{{ route('post.show', ['post' => $list['id']]) }}">{{ $list['name'] }}</a>
                 </td>
-                <td class="text-center">{!! !empty($val['thumbnail']) ? "<img src='//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$val['thumbnail']['file_path']}' alt=''>" : '-' !!}</a>
+                <td class="text-center">{!! !empty($list['thumbnail']) ? "<img src='//lumii-photo.s3.ap-northeast-2.amazonaws.com/{$list['thumbnail']['file_path']}' alt=''>" : '-' !!}</a>
                 </td>
-                <td class="text-left">{{ implode('|', json_decode($val['tag_list'], true)) }}</td>
-                <td class="text-center">{{ $val['is_blind'] === 1 ? '공개' : '비공개' }}</td>
+                <td class="text-left">{{ implode('|', json_decode($list['tag_list'], true)) }}</td>
+                <td class="text-center">{{ $list['is_blind'] === 1 ? '공개' : '비공개' }}</td>
             </tr>
         @endforeach
         </tbody>

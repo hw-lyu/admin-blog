@@ -28,7 +28,7 @@ class BlogPostController extends Controller
         $post = $this->blogPost
             ->with(['menu', 'thumbnail'])
             ->orderBy('id', 'desc')
-            ->paginate(5) ?? [
+            ->paginate(10) ?? [
             [
                 'id' => 0,
                 'name' => '',

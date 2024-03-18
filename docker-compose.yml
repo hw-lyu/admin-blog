@@ -4,6 +4,7 @@ services:
     php:
         image: php:8.3-fpm
         container_name: php
+        restart: always
         networks:
             web:
         build:
@@ -64,6 +65,7 @@ services:
     redis:
         image: redis:latest
         container_name: redis
+        restart: always
         networks:
             web:
         command: redis-server --port 13000

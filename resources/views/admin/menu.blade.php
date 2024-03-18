@@ -10,10 +10,12 @@
                     <button type="button" id="blogMenuRemove">삭제</button>
                 </div>
                 <ul class="flex flex-col list border-double border-4 border-black py-2">
-                    @foreach($data as $key => $val)
+                    @foreach($data as $val)
                         <li data-id="{{ $val['id'] }}" data-blog-data="{{ json_encode($val) }}">
-                            <button type="button" class="first-node w-full text-left py-1 px-3"
-                                    draggable="true">{{ $val['blogMenu'] }}</button>
+                            <button type="button" class="first-node w-full text-left py-1 px-3" draggable="true">
+                                {!! !$val['postState'] ? '<i class="fa-solid fa-lock"></i>' : '' !!}
+                                {{ $val['blogMenu'] }}
+                            </button>
                         </li>
                     @endforeach
                 </ul>
@@ -38,7 +40,7 @@
                     <tr>
                         <th>공개설정</th>
                         <td>
-                            <label><input type="radio" name="post_state" value="1">공개</label>
+                            <label><input type="radio" name="post_state" value="1" checked>공개</label>
                             <label><input type="radio" name="post_state" value="0">비공개</label>
                         </td>
                     </tr>
@@ -124,6 +126,7 @@
 
                     activeBtn.textContent = inputData.blogMenu.value;
                     activeBtn.parentElement.dataset.blogData = JSON.stringify(obj);
+                    activeBtn.innerHTML = (!parseInt(obj.postState) ? '<i class="fa-solid fa-lock"></i> ' : '') + obj.blogMenu;
                 }
             }
         });
@@ -155,6 +158,7 @@
 
                 inputData.blogMenu.value = blogData.blogMenu;
                 inputData.blogMenuEng.value = blogData.blogMenuEng;
+
                 document.querySelector(`input[name="post_state"][value="${blogData.postState}"]`).checked = true;
             }
         });
