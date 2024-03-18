@@ -25,11 +25,4 @@
             <button type="submit" class="py-2 px-5 rounded-md text-white bg-purple-500">등록</button>
         </div>
     </form>
-
-    <script>
-        const USER = {
-            email: '{{ Crypt::encryptString(Request::user()->email) }}',
-            password: '{{ Request::session()->get('encrypt_password') }}',
-        }
-    </script>
 @endsection

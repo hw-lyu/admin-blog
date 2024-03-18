@@ -19,5 +19,11 @@
         </div>
     </div>
 </section>
+<script>
+    const USER = {
+        email: '{{ Crypt::encryptString(Request::user()->email) }}',
+        password: '{{ Request::session()->get('encrypt_password') }}',
+    }
+</script>
 </body>
 </html>
