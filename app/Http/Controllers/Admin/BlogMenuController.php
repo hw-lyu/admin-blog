@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogMenu;
+use App\Models\BlogPost;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 class BlogMenuController extends Controller
 {
 
-    public function __construct(public BlogMenu $blogMenu)
+    public function __construct(public BlogMenu $blogMenu, public BlogPost $blogPost)
     {
     }
 
@@ -42,7 +43,7 @@ class BlogMenuController extends Controller
     }
 
     /**
-     * 메뉴 관리 리스트 저장
+     * 메뉴 관리 리스트 저장 (저장과 업데이트 분리 예정)
      *
      * @param Request $request
      * @return RedirectResponse
@@ -92,6 +93,11 @@ class BlogMenuController extends Controller
         foreach ($removeMenuJson as $removeMenu) {
             $this->blogMenu
                 ->where('id', $removeMenu['id'])
+                ->delete();
+
+            // 해당 메뉴가 삭제될시 포스트 소프트 딜리트 추가
+            $this->blogPost
+                ->where('menu_id', $removeMenu['id'])
                 ->delete();
         }
 
