@@ -29,8 +29,8 @@ if (document?.querySelector('#editor')) {
 
                     editor.insertText(imageUrl);
                 }).catch(function (error) {
-                    if(error.response.data?.msg) {
-                        alert(error.response.data.msg);
+                    if(error.message) {
+                        alert(error.message);
                     }
                     console.error(error);
                 })
