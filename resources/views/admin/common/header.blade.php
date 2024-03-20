@@ -9,7 +9,7 @@
         <nav class="flex items-center">
             <h2 class="sr-only">유용한 메뉴</h2>
             <ul class="flex items-center text-[0.825em]">
-                <li class="pr-5"><a href="">내 블로그</a></li>
+                <li class="pr-5"><a href="//{{ config('app.user_domain') }}">내 블로그</a></li>
                 <li><a href="{{ route('post.index') }}">글쓰기</a></li>
             </ul>
         </nav>
@@ -20,7 +20,7 @@
             <ul class="flex items-center text-[0.825em]">
                 <li class="pr-7"><a href="{{ route('information.index') }}">기본 설정</a></li>
                 <li class="pr-7"><a href="{{ route('menu.index') }}">메뉴 관리</a></li>
-                <li class="pr-7"><a href="">블로그 통계</a></li>
+                <li class="pr-7"><a href="" onclick="return alert('현재 준비중인 메뉴입니다.')">블로그 통계</a></li>
             </ul>
         </nav>
     </div>
