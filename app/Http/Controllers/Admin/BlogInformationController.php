@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class BlogInformationController extends Controller
 {
@@ -78,7 +79,26 @@ class BlogInformationController extends Controller
                 'cover_file_id' => $files['profile_img']['id'],
             ]);
 
+            Log::channel('slack')->info("{$request->user()['email']}님이 블로그 정보를 저장합니다.",
+                [
+                    '블로그명' => $data['name'],
+                    '별명' => $data['nick_name'],
+                    '자기소개' => $data['introduce'],
+                    '프로필 사진 아이디 | 커버사진 아이디' => $files['profile_img']['id'] . ' | ' . $files['profile_img']['id'],
+                ]
+            );
+
         } catch (\Exception $e) {
+            Log::channel('slack')->alert("{$request->user()['email']}님이 블로그 정보를 저장합니다.",
+                [
+                    '블로그명' => $data['name'],
+                    '별명' => $data['nick_name'],
+                    '자기소개' => $data['introduce'],
+                    '프로필 사진 아이디 | 커버사진 아이디' => $files['profile_img']['id'] . ' | ' . $files['profile_img']['id'],
+                    '에러 메시지' => $e->getMessage()
+                ]
+            );
+
             return back()->withErrors([
                 'error' => $e->getMessage()]);
         }
