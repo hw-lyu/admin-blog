@@ -43,7 +43,7 @@ class BlogMenuController extends Controller
     }
 
     /**
-     * 메뉴 관리 리스트 저장 (저장과 업데이트 분리 예정)
+     * 메뉴 관리 리스트 저장
      *
      * @param Request $request
      * @return RedirectResponse
