@@ -18,7 +18,10 @@ if (document?.querySelector('#editor')) {
                 axios({
                     url: '/api/v1/file/upload', method: 'post', headers: {
                         "Content-Type": "multipart/form-data",
-                    }, data: formData
+                    }, data: formData, auth: {
+                        username: USER.email,
+                        password: USER.password
+                    }
                 }).then(function (res) {
                     let data = res.data, imageSrc = document.getElementById('toastuiAltTextInput').value ?? 'image',
                         imageUrl = `![${imageSrc}](//lumii-photo.s3.ap-northeast-2.amazonaws.com/${data.post.post_path}?id=${data.post.id})`;
