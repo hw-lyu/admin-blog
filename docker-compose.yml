@@ -15,6 +15,7 @@ services:
         volumes:
             - ./:/home/admin-blog
             - ./public:/home/admin-blog/public
+            - ./php.ini:/usr/local/etc/php/php.ini
 
     nginx:
         image: nginx:latest

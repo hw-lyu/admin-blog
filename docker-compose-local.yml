@@ -11,10 +11,11 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "9001:9001"
+      - "9001:9000"
     volumes:
       - ./:/home/admin-blog
       - ./public:/home/admin-blog/public
+      - ./php.ini:/usr/local/etc/php/php.ini
 
   nginx:
     image: nginx:latest
