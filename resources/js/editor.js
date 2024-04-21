@@ -35,6 +35,7 @@ if (document?.querySelector('#editor')) {
                     if(error.message) {
                         alert(error.message);
                     }
+                    console.log(USER);
                     console.error(error);
                 })
             }
