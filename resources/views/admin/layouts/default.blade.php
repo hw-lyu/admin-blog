@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>블로그 어드민 - @yield('title', '메인')</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        const USER = {
+            email: '{{ Crypt::encryptString(Request::user()->email) }}',
+            password: '{{ Request::session()->get('encrypt_password') }}',
+        }
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-w-[1180px]">
@@ -19,11 +25,5 @@
         </div>
     </div>
 </section>
-<script>
-    const USER = {
-        email: '{{ Crypt::encryptString(Request::user()->email) }}',
-        password: '{{ Request::session()->get('encrypt_password') }}',
-    }
-</script>
 </body>
 </html>
