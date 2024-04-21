@@ -21,5 +21,4 @@ yarn-error.log
 fullchain.pem
 privkey.pem
 /etc
-./php.ini
 
