@@ -127,3 +127,7 @@ body {
 .toastui-editor-contents {
     font-family: inherit !important;
 }
+
+.txt-box .group {
+    width: 100%;
+}
