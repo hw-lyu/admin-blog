@@ -18,7 +18,10 @@
     "src": "resources/js/app.js"
   },
   "resources/js/front-app.js": {
-    "file": "assets/front-app-w40geAFS.js",
+    "css": [
+      "assets/front-app-ZQAPeiEp.css"
+    ],
+    "file": "assets/front-app-i_gPpxgF.js",
     "isEntry": true,
     "src": "resources/js/front-app.js"
   }

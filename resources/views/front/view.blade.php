@@ -13,7 +13,9 @@
         </div>
     </div>
     <div class="inner my-5 py-5">
-        {!! $view['content'] !!}
+        <div class="toastui-editor-contents">
+            {!! $view['content'] !!}
+        </div>
         <ul class="tag-list">
             @foreach(json_decode($view['tag_list']) as $tag)
                 <li><a href="/hash?hashtag={{ $tag }}">#{{ $tag }}</a></li>
