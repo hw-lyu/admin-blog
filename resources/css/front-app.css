@@ -19,12 +19,12 @@ body {
     @apply min-w-[320px] bg-gray-50 break-words;
 }
 
-.inner {
-    @apply max-w-[980px] mx-auto px-[10px];
-}
-
 p {
     @apply break-keep;
+}
+
+.inner {
+    @apply max-w-[980px] mx-auto px-[10px];
 }
 
 .recent-posts-list {
