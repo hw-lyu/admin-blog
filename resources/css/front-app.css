@@ -123,3 +123,7 @@ body {
 .tag-list li a {
     @apply text-sm border border-purple-600 text-gray-400 px-3 py-1;
 }
+
+.toastui-editor-contents {
+    font-family: inherit !important;
+}
