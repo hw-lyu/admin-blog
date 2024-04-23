@@ -5,7 +5,7 @@
     "src": "resources/css/app.css"
   },
   "resources/css/front-app.css": {
-    "file": "assets/front-app-uHMHoisM.css",
+    "file": "assets/front-app-_46jSkLn.css",
     "isEntry": true,
     "src": "resources/css/front-app.css"
   },
@@ -13,7 +13,7 @@
     "css": [
       "assets/app-MaJdjBKp.css"
     ],
-    "file": "assets/app-k-PPBBUT.js",
+    "file": "assets/app-5fgrLJnX.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },

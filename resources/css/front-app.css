@@ -60,7 +60,7 @@ body {
 }
 
 .recent-posts-list .item a {
-    @apply block h-full pt-32 pl-3 pr-3 pb-3 relative z-10;
+    @apply block text-white h-full pt-32 pl-3 pr-3 pb-3 relative z-10;
 }
 
 .recent-posts-list .item .cate {
