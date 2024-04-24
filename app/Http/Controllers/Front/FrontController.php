@@ -86,7 +86,7 @@ class FrontController extends Controller
             }
         }
 
-        $recentPostsList = $this->blogPost
+        $recentPostsData = $this->blogPost
             ->with(['menu', 'thumbnail'])
             ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
             ->when($menuEng, fn($query) => $query->where('menu_id', $menu->first()->id))
@@ -97,9 +97,21 @@ class FrontController extends Controller
             ->whereNull('blog_menus.deleted_at')
             ->selectRaw('blog_post.id, blog_post.name, blog_post.content, blog_post.tag_list, blog_post.view_count, blog_post.is_blind, blog_post.menu_id, blog_post.thumbnail_id, blog_post.created_at')
             ->orderBy('blog_post.view_count', 'desc')
-            ->limit(5)
-            ->get()
-            ->toArray();
+            ->limit(5);
+
+        // If) post 글 생성 날짜가 7일 전보다 크거나 같을 경우 많이 본 게시글 기준으로 한다.
+        // else) 7일 전보다 크거나 같은 게시물이 없는 경우 전체 글 기준으로 list data 생성
+        $allDays = now()->addDays(-7);
+        if ($this->blogPost->where('created_at', '>=', $allDays)->exists()) {
+            $recentPostsList = $recentPostsData
+                ->where('blog_post.created_at', '>=', $allDays)
+                ->get()
+                ->toArray();
+        } else {
+            $recentPostsList = $recentPostsData
+                ->get()
+                ->toArray();
+        }
 
         return view('front.index', ['recentPostsList' => $recentPostsList]);
     }
