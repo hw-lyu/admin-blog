@@ -12,6 +12,7 @@
                     <li class="item {{ $loop->first ? 'active' : '' }}"
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$recentPostList['thumbnail']['file_path']."')" : "background-image: url('".config('app.no_thumb_url')."')" !!}">
                         <a href="{{ route('front.show', ['menuEng' => $recentPostList['menu']['name_eng'], 'id' => $recentPostList['id']]) }}">
+                            <div class="text-sm absolute top-3 right-3">조회수 {{ $recentPostList['view_count'] ?? '-' }}</div>
                             <div class="menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
                             <div class="txt-box pointer-events-none">
                                 <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
