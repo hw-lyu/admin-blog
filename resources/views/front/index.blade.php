@@ -77,10 +77,10 @@
                                      ${ele['thumbnail'] ? `<img src="{{config('app.s3_thumb_url')}}${ele['thumbnail']['file_path']}" alt="">` : `<img src="{{config('app.no_thumb_url')}}" alt="">`}
                                 </div>
                                 <div class="txt-box">
-                                    <div class="menu">${ele['menu']['name'] ?? '-'}</div>
+                                    <div class="menu mb-1">${ele['menu']['name'] ?? '-'}</div>
                                     <div class="group">
                                         <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
-                                        <p class="info md:line-clamp-5 line-clamp-3">${divHidden.innerText}</p>
+                                        <p class="info line-clamp-3">${divHidden.innerText}</p>
                                     </div>
                                     <p class="date">${ele['created_at']}</p>
                                 </div>
