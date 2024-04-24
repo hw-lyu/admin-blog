@@ -13,7 +13,7 @@
                         style="{!! !empty($recentPostList['thumbnail']) ? "background-image: url('".config('app.s3_thumb_url').$recentPostList['thumbnail']['file_path']."')" : "background-image: url('".config('app.no_thumb_url')."')" !!}">
                         <a href="{{ route('front.show', ['menuEng' => $recentPostList['menu']['name_eng'], 'id' => $recentPostList['id']]) }}">
                             <div class="text-sm absolute top-3 right-3">조회수 {{ $recentPostList['view_count'] ?? '-' }}</div>
-                            <div class="menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
+                            <div class="font-medium	menu pointer-events-none">{{ $recentPostList['menu']['name'] ?? '-' }}</div>
                             <div class="txt-box pointer-events-none">
                                 <p class="text-2xl md:line-clamp-2 line-clamp-1 mt-1">{{ $recentPostList['name'] }}</p>
                                 <p class="md:line-clamp-3 line-clamp-2 mt-1">{{ strip_tags($recentPostList['content']) }}</p>
@@ -79,7 +79,7 @@
                                 <div class="txt-box">
                                     <div class="menu mb-1">${ele['menu']['name'] ?? '-'}</div>
                                     <div class="group">
-                                        <p class="text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
+                                        <p class="font-medium text-2xl md:line-clamp-2 line-clamp-1">${ele['name']}</p>
                                         <p class="info line-clamp-3">${divHidden.innerText}</p>
                                     </div>
                                     <p class="date">${ele['created_at']}</p>
