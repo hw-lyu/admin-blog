@@ -22,4 +22,83 @@
             @endforeach
         </ul>
     </div>
+    <hr>
+    <div class="comment-list-wrap">
+        <div class="inner">
+            <p class="my-2">총 {0}</p>
+            <div class="comment mt-2">
+                <p>{name}</p>
+                <p class="mt-1">{content}</p>
+            </div>
+            <div class="comment mt-2">
+                <p>{name}</p>
+                <p class="mt-1">{content}</p>
+            </div>
+        </div>
+    </div>
+    <form action="#" name="comment_form" class="mt-5" method="post">
+        <div class="comment-wrap">
+            <div class="inner">
+                <div class="relative">
+                    <img src="" alt="Image preview" class="preview" draggable="false">
+                    <button type="button" class="remove-btn">Remove</button>
+                </div>
+                <div class="comment flex flex-col">
+                    <label for="commentContent" class="mb-2">Comment</label>
+                    <div class="flex justify-between">
+                        <textarea name="comment_content" id="commentContent" cols="30" rows="5"
+                                  class="w-[calc(100%-85px)]"></textarea>
+                        <button type="button"
+                                class="w-[70px] inline-block text-center text-sm p-2 border border-black rounded btn-add">
+                            등록
+                        </button>
+                    </div>
+                </div>
+                <label class="mt-3 file-label">
+                <span
+                    class="inline-block w-auto text-center text-sm p-2 border border-black rounded mt-3 cursor-pointer">이미지 첨부</span>
+                    <input type="file" class="hidden file-input">
+                </label>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        let fileInput = document.querySelector('.file-input'),
+            preview = document.querySelector('.preview'),
+            btnRemove = document?.querySelector('.remove-btn'),
+            btnAdd = document.querySelector('.btn-add'),
+            fileRender = new FileReader();
+
+        // 파일이 등록되면 base64로 프리뷰 인코딩
+        fileInput.addEventListener('change', function (e) {
+            let file = e.target.files[0];
+
+            fileRender.addEventListener('load', (evt) => {
+                preview.classList.add('show');
+                // result 인터페이스의 읽기 전용 속성은 파일 FileReader 내용을 반환
+                preview.src = evt.target.result;
+            });
+
+            if (file) {
+                // 이때 속성에는 파일의 데이터를 base64로 인코딩된 문자열로 나타내는 data : URL 로 데이터가 포함
+                fileRender.readAsDataURL(file);
+            }
+        });
+
+        // 프리뷰 이미지 삭제
+        btnRemove.addEventListener('click', () => {
+            fileInput.value = "";
+            preview.src = "";
+            preview.classList.remove('show');
+        });
+
+        btnAdd.addEventListener('click', () => {
+            let con = confirm("코멘트를 등록하시겠습니까?");
+
+            if (con) {
+                document.forms.comment_form.submit();
+            }
+        });
+    </script>
 @endsection
