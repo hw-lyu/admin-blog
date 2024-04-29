@@ -48,13 +48,14 @@ class FrontController extends Controller
             }
         }
 
+        $menuId = $menu->first()['id'];
         $view = $this->blogPost
             ->with(['menu', 'thumbnail'])
             ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
             ->where([
                 'blog_post.is_blind' => '1',
                 'blog_menus.is_blind' => '1',
-                'blog_post.menu_id' => $menu->first()['id']
+                'blog_post.menu_id' => $menuId
             ])
             ->selectRaw('blog_post.*')
             ->whereNull('blog_menus.deleted_at')
@@ -62,7 +63,13 @@ class FrontController extends Controller
 
         $view->increment('view_count');
 
-        return view('front.view', ['view' => $view]);
+        return view('front.view', [
+            'view' => $view,
+            'postInfo' => [
+                'menuId' => $menuId,
+                'postId' => $id
+            ]
+        ]);
     }
 
     /**

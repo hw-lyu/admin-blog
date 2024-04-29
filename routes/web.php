@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\BlogMenuController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Front\FrontController;
-
+use App\Http\Controllers\Front\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,5 +43,6 @@ Route::domain(config('app.user_domain'))
             Route::get('/hash', [FrontController::class, 'hashTag'])->name('hashtag');
             Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');
             Route::get('/view/{menuEng}/{id}', [FrontController::class, 'show'])->name('show');
+            Route::resource('/comment', CommentController::class);
         });
     });

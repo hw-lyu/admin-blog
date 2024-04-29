@@ -36,14 +36,21 @@
             </div>
         </div>
     </div>
-    <form action="#" name="comment_form" class="mt-5" method="post">
+    <form action="{{route('front.comment.store')}}" name="comment_form" class="mt-5" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="menu_id" value="{{ $postInfo['menuId'] }}">
+        <input type="hidden" name="post_id" value="{{ $postInfo['postId'] }}">
         <div class="comment-wrap">
             <div class="inner">
                 <div class="relative">
-                    <img src="" alt="Image preview" class="preview" draggable="false">
+                    <img src="" alt="Image preview" class="preview mb-3" draggable="false">
                     <button type="button" class="remove-btn">Remove</button>
                 </div>
                 <div class="comment flex flex-col">
+                    <div class="flex mb-3">
+                        <label class="flex flex-col"><span class="mb-2">ID</span> <input type="text" name="comment_id" placeholder="아이디를 입력해주세요."></label>
+                        <label class="flex flex-col ml-3"><span class="mb-2">PW</span> <input type="password" name="comment_pw" placeholder="패스워드를 입력해주세요."></label>
+                    </div>
                     <label for="commentContent" class="mb-2">Comment</label>
                     <div class="flex justify-between">
                         <textarea name="comment_content" id="commentContent" cols="30" rows="5"
@@ -57,7 +64,7 @@
                 <label class="mt-3 file-label">
                 <span
                     class="inline-block w-auto text-center text-sm p-2 border border-black rounded mt-3 cursor-pointer">이미지 첨부</span>
-                    <input type="file" class="hidden file-input">
+                    <input type="file" name="comment_image" class="hidden file-input">
                 </label>
             </div>
         </div>

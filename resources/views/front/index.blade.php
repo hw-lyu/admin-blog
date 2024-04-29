@@ -62,7 +62,7 @@
         const postList = document.querySelector('.post-list');
         const PATH = `/api/v1${location.pathname}?cursor=`;
 
-        const items = async function (nextCursor = '') {
+        const items = function (nextCursor = '') {
             fetch(`${PATH}${nextCursor}`, {
                 method: 'get'
             }).then(function (response) {
