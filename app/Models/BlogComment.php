@@ -11,11 +11,13 @@ class BlogComment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'name',
+        'password',
+        'content',
         'menu_id',
         'post_id',
-        'comment_id',
-        'comment_pw',
-        'comment_content',
-        'comment_image'
+        'ip',
+        'user_agent',
+        'comment_file_id'
     ];
 }

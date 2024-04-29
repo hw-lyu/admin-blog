@@ -22,12 +22,13 @@ class BlogCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment_id' => 'required|string',
-            'comment_pw' => 'required|string',
-            'comment_content' => 'required|string',
+            'name' => 'required|string',
+            'password' => 'required|string',
+            'content' => 'required|string',
             'menu_id' => 'required|string',
             'post_id' => 'required|string',
-            'comment_image' => 'sometimes|image',
+            'comment_file_id' => 'sometimes|string',
+            'comment_img' => 'sometimes|image',
         ];
     }
 }
