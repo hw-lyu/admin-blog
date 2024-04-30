@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlogComment;
 use App\Models\BlogMenu;
 use App\Models\BlogPost;
 use Illuminate\Contracts\Foundation\Application;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    public function __construct(public BlogPost $blogPost)
+    public function __construct(public BlogPost $blogPost, public BlogComment $blogComment)
     {
     }
 
@@ -50,7 +51,7 @@ class FrontController extends Controller
 
         $menuId = $menu->first()['id'];
         $view = $this->blogPost
-            ->with(['menu', 'thumbnail'])
+            ->with(['menu', 'thumbnail', 'comment'])
             ->leftJoin('blog_menus', 'blog_post.menu_id', 'blog_menus.id')
             ->where([
                 'blog_post.is_blind' => '1',

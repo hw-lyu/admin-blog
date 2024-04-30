@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -28,7 +29,7 @@ class BlogPost extends Model
     /**
      * array / JSON 직렬화 날짜를 해당 포맷으로 준비
      */
-    protected function serializeDate(DateTimeInterface $date) : string
+    protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
     }
@@ -51,5 +52,16 @@ class BlogPost extends Model
     public function thumbnail(): HasOne
     {
         return $this->hasOne(BlogFile::class, 'id', 'thumbnail_id');
+    }
+
+    /**
+     * post comment
+     *
+     * @return HasMany
+     */
+    public function comment(): HasMany
+    {
+        return $this->hasMany(BlogComment::class, 'post_id')
+            ->with(['commentFile']);
     }
 }

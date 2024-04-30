@@ -22,21 +22,32 @@
             @endforeach
         </ul>
     </div>
-    <hr>
+    <hr class="my-5">
     <div class="comment-list-wrap">
         <div class="inner">
-            <p class="my-2">총 {0}</p>
-            <div class="comment mt-2">
-                <p>{name}</p>
-                <p class="mt-1">{content}</p>
-            </div>
-            <div class="comment mt-2">
-                <p>{name}</p>
-                <p class="mt-1">{content}</p>
-            </div>
+            <p class="my-2">총 {{ count($view['comment']) }}</p>
+            @foreach($view['comment'] as $comment)
+                <div class="comment mt-2">
+                    <div class="text-sm flex justify-between">
+                        <div class="flex">
+                            <p class="mr-3">{{ $comment['name'] }}</p>
+                            <p>{{ $comment['created_at'] }}</p>
+                        </div>
+                        <a href="{{ route('front.comments.create', ['comment' => $comment['id'] ]) }}" target="_blank">수정/삭제</a>
+                    </div>
+                    @if(!empty($comment['commentFile']))
+                        <div class="my-2">
+                            <img src="{{ config('app.s3_thumb_url').$comment['commentFile']['file_path'] }}" alt="">
+                        </div>
+                    @endif
+                    <p class="mt-1">{!! $comment['content'] !!}</p>
+                    <hr class="my-5 border-gray-300">
+                </div>
+            @endforeach
         </div>
     </div>
-    <form action="{{route('front.comment.store')}}" name="comment_form" class="mt-5" method="post" enctype="multipart/form-data">
+    <form action="{{route('front.comments.store')}}" name="comment_form" class="mt-5" method="post"
+          enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="menu_id" value="{{ $postInfo['menuId'] }}">
         <input type="hidden" name="post_id" value="{{ $postInfo['postId'] }}">
@@ -48,8 +59,11 @@
                 </div>
                 <div class="comment flex flex-col">
                     <div class="flex mb-3">
-                        <label class="flex flex-col"><span class="mb-2">ID</span> <input type="text" name="name" placeholder="아이디를 입력해주세요."></label>
-                        <label class="flex flex-col ml-3"><span class="mb-2">PW</span> <input type="password" name="password" placeholder="패스워드를 입력해주세요."></label>
+                        <label class="flex flex-col"><span class="mb-2">ID</span> <input type="text" name="name"
+                                                                                         placeholder="아이디를 입력해주세요."></label>
+                        <label class="flex flex-col ml-3"><span class="mb-2">PW</span> <input type="password"
+                                                                                              name="password"
+                                                                                              placeholder="패스워드를 입력해주세요."></label>
                     </div>
                     <label for="commentContent" class="mb-2">Comment</label>
                     <div class="flex justify-between">

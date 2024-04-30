@@ -43,6 +43,8 @@ Route::domain(config('app.user_domain'))
             Route::get('/hash', [FrontController::class, 'hashTag'])->name('hashtag');
             Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');
             Route::get('/view/{menuEng}/{id}', [FrontController::class, 'show'])->name('show');
-            Route::resource('/comment', CommentController::class);
+            Route::resource('/comments', CommentController::class);
+            Route::post('/comments/{comment}/check', [CommentController::class, 'check'])
+                ->name('comments.check');
         });
     });
