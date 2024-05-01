@@ -33,7 +33,10 @@
                             <p class="mr-3">{{ $comment['name'] }}</p>
                             <p>{{ $comment['created_at'] }}</p>
                         </div>
-                        <a href="{{ route('front.comments.create', ['comment' => $comment['id'] ]) }}" target="_blank">수정/삭제</a>
+                        <button type="button"
+                                data-url="{{ route('front.comments.enter', ['comment' => $comment['id'] ]) }}"
+                                class="btn-edit">수정/삭제
+                        </button>
                     </div>
                     @if(!empty($comment['commentFile']))
                         <div class="my-2">
@@ -46,7 +49,7 @@
             @endforeach
         </div>
     </div>
-    <form action="{{route('front.comments.store')}}" name="comment_form" class="mt-5" method="post"
+    <form action="{{ route('front.comments.store') }}" name="comment_form" class="mt-5" method="post"
           enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="menu_id" value="{{ $postInfo['menuId'] }}">
@@ -88,7 +91,8 @@
         let fileInput = document.querySelector('.file-input'),
             preview = document.querySelector('.preview'),
             btnRemove = document?.querySelector('.remove-btn'),
-            btnAdd = document.querySelector('.btn-add'),
+            btnAdd = document?.querySelector('.btn-add'),
+            commentListWrap = document?.querySelector('.comment-list-wrap'),
             fileRender = new FileReader();
 
         // 파일이 등록되면 base64로 프리뷰 인코딩
@@ -119,6 +123,14 @@
 
             if (con) {
                 document.forms.comment_form.submit();
+            }
+        });
+
+        commentListWrap.addEventListener('click', (e) => {
+            let eTarget = e.target;
+
+            if (eTarget.classList.contains('btn-edit')) {
+                window.open(eTarget.dataset.url, "popupEdit", "top=300, left=500 ,width=400, height=400");
             }
         });
     </script>

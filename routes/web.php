@@ -44,6 +44,8 @@ Route::domain(config('app.user_domain'))
             Route::get('/page/{menuEng?}', [FrontController::class, 'menuPost'])->name('page.index');
             Route::get('/view/{menuEng}/{id}', [FrontController::class, 'show'])->name('show');
             Route::resource('/comments', CommentController::class);
+            Route::get('/comments/{comment}/enter', [CommentController::class, 'enter'])
+                ->name('comments.enter');
             Route::post('/comments/{comment}/check', [CommentController::class, 'check'])
                 ->name('comments.check');
         });

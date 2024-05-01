@@ -18,6 +18,7 @@
     </div>
 </section>
 @include('front.common.footer', [['blogInfo' => $blogInfo]])
+@include('front.common.toast-popup')
 
 <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
 <script type="text/javascript">
