@@ -101,7 +101,11 @@ class CommentController extends Controller
         $check = $this->check(request: $request, id: $id);
 
         if ($check) {
-            return view('front.layouts.comment', ['commentId' => $id]);
+            $comment = $this->blogComment
+                ->with(['commentFile'])
+                ->find($id);
+
+            return view('front.layouts.comment-edit', ['comment' => $comment]);
         }
 
         return back()->withErrors(['error' => '비밀번호가 틀렸습니다.']);

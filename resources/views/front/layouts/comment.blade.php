@@ -9,13 +9,12 @@
     @vite(['resources/css/front-app.css', 'resources/js/front-app.js'])
 </head>
 <body>
-<div class="comment-wrap" data-tab="1">
+<div class="comment-wrap">
     <p class="py-3 px-5 bg-gray-300">댓글 수정/삭제</p>
     <div class="comment-edit">
         <button type="button" data-mode="edit" class="active">수정</button>
         <button type="button" data-mode="delete">삭제</button>
     </div>
-
     <form action="{{ route('front.comments.edit', ['comment' => $commentId]) }}" method="get" name="comment_form"
           class="comment-form">
         @csrf
@@ -68,6 +67,8 @@
             if (con) {
                 return document.forms.comment_form.submit();
             }
+
+            return false;
         }
 
         return document.forms.comment_form.submit();
