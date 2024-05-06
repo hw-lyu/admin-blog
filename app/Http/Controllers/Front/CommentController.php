@@ -105,7 +105,7 @@ class CommentController extends Controller
                 ->with(['commentFile'])
                 ->find($id);
 
-            return view('front.layouts.comment-edit', ['comment' => $comment]);
+            return view('front.layouts.comment-edit', ['original_password' => $request->query('password'), 'comment' => $comment]);
         }
 
         return back()->withErrors(['error' => '비밀번호가 틀렸습니다.']);
@@ -116,13 +116,37 @@ class CommentController extends Controller
      *
      * @param Request $request
      * @param string $id
-     * @return void
+     * @return RedirectResponse
      */
     public function update(Request $request, string $id)
     {
-        $password = $request->input('password');
-        $comment = $this->blogComment
-            ->find($id);
+        $data = $request->except(['_token', '_method', 'comment_img', 'now_file_id', 'now_file']);
+        $files = [
+            'comment_img' => [
+                'id' => $request->input('now_file_id') ?? null
+            ]
+        ];
+
+        try {
+            if ($request->has('comment_img')) {
+                $files = file_s3_upload(nowFiles: $files, requestFiles: $request->file(), path: 'comment');
+            }
+
+            $data['password'] = Hash::make($data['password']);
+            $this->blogComment
+                ->find($id)
+                ->update([
+                ...$data,
+                'ip' => "{$request->ip()}",
+                'user_agent' => $request->server('HTTP_USER_AGENT'),
+                'comment_file_id' => $files['comment_img']['id'],
+            ]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+
+        return back()->with('message', '코멘트가 수정 되었습니다.');
     }
 
     /**
