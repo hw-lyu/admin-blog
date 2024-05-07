@@ -118,7 +118,7 @@ class CommentController extends Controller
      * @param string $id
      * @return RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id) : RedirectResponse
     {
         $data = $request->except(['_token', '_method', 'comment_img', 'now_file_id', 'now_file']);
         $files = [
