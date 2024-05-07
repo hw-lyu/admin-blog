@@ -43,7 +43,7 @@
                             <img src="{{ config('app.s3_thumb_url').$comment['commentFile']['file_path'] }}" alt="">
                         </div>
                     @endif
-                    <p class="mt-1">{!! $comment['content'] !!}</p>
+                    <p class="mt-1 whitespace-pre-line">{!! $comment['content'] !!}</p>
                     <hr class="my-5 border-gray-300">
                 </div>
             @endforeach
