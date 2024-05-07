@@ -37,9 +37,9 @@
                 <div class="flex flex-col items-start justify-center mt-5">
                     <label class="w-full flex flex-col items-start justify-center">
                         <span class="mb-1">기존 업로드된 파일명 <span class="text-sm">(*기존에 썼었던 이미지 파일)</span></span>
-                        <input type="hidden" name="now_file_id" value="{{ $comment['commentFile']['id'] }}">
+                        <input type="hidden" name="now_file_id" value="{{ !empty($comment['commentFile']['id']) ? $comment['commentFile']['id'] : '' }}">
                         <input type="text" class="w-full border-gray-300" name="now_file"
-                               value="{{ $comment['commentFile']['file_name'] }}" readonly>
+                               value="{{ !empty($comment['commentFile']['file_name']) ? $comment['commentFile']['file_name'] : '' }}" readonly>
                     </label>
                     <label for="commentImg" class="mb-1 mt-3">새로 파일 업로드 <span class="text-sm">(*새로 파일 업로드할 시 기존 파일에서 교체)</span></label>
                     <input type="file" class="w-full" id="commentImg" name="comment_img">
@@ -72,7 +72,9 @@
             }
         });
 
-        btnSend.addEventListener('click', () => {
+        btnSend.addEventListener('click', (e) => {
+            e.preventDefault();
+
             inputMethod.value = 'patch';
             document.forms.comment_form.action = '{{ route('front.comments.update', ['comment' => $comment['id']]) }}';
             document.forms.comment_form.submit();
