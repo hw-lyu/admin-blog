@@ -14,6 +14,8 @@ use Illuminate\Contracts\View\View;
 
 class CommentController extends Controller
 {
+    protected int $MAX_TODAY_COMMENT_COUNT = 3;
+
     public function __construct(public BlogComment $blogComment)
     {
     }
@@ -26,6 +28,7 @@ class CommentController extends Controller
      */
     public function store(BlogCommentRequest $request): RedirectResponse
     {
+        // 코멘트 및 파일 업로드 관련 변수
         $data = $request->except(['_token', 'comment_img']);
         $files = [
             'comment_img' => [
@@ -33,6 +36,21 @@ class CommentController extends Controller
             ]
         ];
 
+        // 오늘 일자 기준 동일 IP의 코멘트 3개가 있으면 코멘트 저장할 수 없게 예외처리
+        $ip = $request->ip();
+        $commentTodayCount = $this->blogComment
+            ->where([
+                'ip' => $ip,
+                'post_id' => $data['post_id']
+            ])
+            ->whereDate('created_at', now()->format('Y-m-d'))
+            ->count();
+
+        if($this->MAX_TODAY_COMMENT_COUNT <= $commentTodayCount) {
+            return back()->with('message', "오늘 하루 동일 IP($ip)로 쓸 수 있는 코멘트 횟수(총 $this->MAX_TODAY_COMMENT_COUNT 번)를 다쓰셨습니다.");
+        }
+
+        // 파일 업로드 및 코멘트 인서트
         try {
             if ($request->has('comment_img')) {
                 $files = file_s3_upload(nowFiles: $files, requestFiles: $request->file(), path: 'comment');
@@ -41,7 +59,7 @@ class CommentController extends Controller
             $data['password'] = Hash::make($data['password']);
             $this->blogComment->create([
                 ...$data,
-                'ip' => "{$request->ip()}",
+                'ip' => $ip,
                 'user_agent' => $request->server('HTTP_USER_AGENT'),
                 'comment_file_id' => $files['comment_img']['id'],
             ]);
@@ -118,7 +136,7 @@ class CommentController extends Controller
      * @param string $id
      * @return RedirectResponse
      */
-    public function update(Request $request, string $id) : RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         $data = $request->except(['_token', '_method', 'comment_img', 'now_file_id', 'now_file']);
         $files = [
@@ -136,11 +154,11 @@ class CommentController extends Controller
             $this->blogComment
                 ->find($id)
                 ->update([
-                ...$data,
-                'ip' => "{$request->ip()}",
-                'user_agent' => $request->server('HTTP_USER_AGENT'),
-                'comment_file_id' => $files['comment_img']['id'],
-            ]);
+                    ...$data,
+                    'ip' => "{$request->ip()}",
+                    'user_agent' => $request->server('HTTP_USER_AGENT'),
+                    'comment_file_id' => $files['comment_img']['id'],
+                ]);
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
