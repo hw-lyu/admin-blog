@@ -36,7 +36,7 @@ class CommentController extends Controller
             ]
         ];
 
-        // 오늘 일자 기준 동일 IP의 코멘트 3개가 있으면 코멘트 저장할 수 없게 예외처리
+        // 오늘 일자 하나의 포스트 기준 동일 IP의 코멘트 3개가 있으면 코멘트 저장할 수 없게 예외처리
         $ip = $request->ip();
         $commentTodayCount = $this->blogComment
             ->where([
@@ -47,7 +47,7 @@ class CommentController extends Controller
             ->count();
 
         if($this->MAX_TODAY_COMMENT_COUNT <= $commentTodayCount) {
-            return back()->with('message', "오늘 하루 동일 IP($ip)로 쓸 수 있는 코멘트 횟수(총 $this->MAX_TODAY_COMMENT_COUNT 번)를 다쓰셨습니다.");
+            return back()->with('message', "해당 글에서 오늘 하루 동일 IP($ip)로 쓸 수 있는 코멘트 횟수(총 $this->MAX_TODAY_COMMENT_COUNT 번)를 다쓰셨습니다.");
         }
 
         // 파일 업로드 및 코멘트 인서트
