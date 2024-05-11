@@ -61,10 +61,10 @@
                     <button type="button" class="remove-btn">Remove</button>
                 </div>
                 <div class="comment flex flex-col">
-                    <div class="flex mb-3">
-                        <label class="flex flex-col"><span class="mb-2">ID</span> <input type="text" name="name"
+                    <div class="flex justify-between mb-3">
+                        <label class="w-[49%] flex flex-col"><span class="mb-2">ID</span> <input type="text" name="name"
                                                                                          placeholder="아이디를 입력해주세요."></label>
-                        <label class="flex flex-col ml-3"><span class="mb-2">PW</span> <input type="password"
+                        <label class="w-[49%] flex flex-col"><span class="mb-2">PW</span> <input type="password"
                                                                                               name="password"
                                                                                               placeholder="패스워드를 입력해주세요."></label>
                     </div>
